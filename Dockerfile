@@ -1,11 +1,20 @@
 # Use the official Node.js 16 image as the base image
 FROM node:latest
 
-# Check if UID 1000 exists, and if not, create the user
-RUN if ! id -u 1000; then \
-        groupadd -r webapi && useradd -r -g webapi -u 1000 webapi; \
-    fi
+# Set a range for acceptable UIDs. 
+# For example, UIDs between 1000 and 9999.
+# Adjust this range based on your requirements.
+ARG UID_MIN=1000
+ARG UID_MAX=9999
 
+# Create a non-root user with a dynamically assigned unique UID
+RUN groupadd -r webapi && \
+    for uid in $(seq $UID_MIN $UID_MAX); do \
+        if ! getent passwd $uid; then \
+            useradd -r -g webapi -u $uid webapi; \
+            break; \
+        fi; \
+    done
 # Switch to the newly created user
 USER webapi
 

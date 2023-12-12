@@ -111,21 +111,23 @@ pipeline {
             }
         }
 
-        stage('Code Quality Analysis (sonarQube)') {
-            steps {
-                script {
-                    // Pass the coverage report to SonarQube
-                    withSonarQubeEnv('sonar-server') {
-                        sh """
-                            ${SCANNER_HOME}/bin/sonar-scanner \
-                            -Dsonar.projectName='${params.PROJECT_NAME}' \
-                            -Dsonar.projectKey='${params.PROJECT_NAME}' \
-                            -Dsonar.javascript.lcov.reportPaths=${env.WORKSPACE}/coverage/lcov.info
-                        """
-                    }
-                }
+stage('Code Quality Analysis (SonarQube)') {
+    steps {
+        script {
+            // Pass the coverage report to SonarQube
+            withSonarQubeEnv('sonar-server') {
+                sh """
+                    ${SCANNER_HOME}/bin/sonar-scanner \
+                    -Dsonar.projectName='${params.PROJECT_NAME}' \
+                    -Dsonar.projectKey='${params.PROJECT_NAME}' \
+                    -Dsonar.sources=src \
+                    -Dsonar.test.exclusions=__tests__/** \
+                    -Dsonar.javascript.lcov.reportPaths=${env.WORKSPACE}/coverage/lcov.info
+                """
             }
         }
+    }
+}
 
         stage('Quality Analysis Gate (sonarQube)') {
             steps {
