@@ -7,6 +7,13 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
+
+
+# Install project dependencies as a non-root user
+RUN groupadd -r webapi && useradd -r -g webapi webapi && \
+    chown -R webapi:webapi /app
+USER webapi
+
 # Install project dependencies
 RUN npm install --ignore-scripts
 
