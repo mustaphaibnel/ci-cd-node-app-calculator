@@ -1,23 +1,19 @@
 const request = require('supertest');
-const app = require('../server');
+const app = require('../src/app');
+
+let server;
+
+beforeAll(() => {
+  server = app.listen(3000);
+});
+
+afterAll((done) => {
+  server.close(done);
+});
 
 describe('Server', () => {
-  let server;
-
-  beforeAll(() => {
-    // Start the server before running tests
-    server = app.listen(3000); // You can use a different port if needed
-  });
-
-  afterAll((done) => {
-    // Close the server after all tests are done
-    server.close(done);
-  });
-
-  it('should return a 200 status when the server is running', async () => {
+  it('should return "Hello from server" at the root', async () => {
     const response = await request(app).get('/');
-    expect(response.status).toBe(200);
+    expect(response.text).toBe('Hello from server');
   });
-
-  // Add more server-related tests as needed
 });

@@ -9,6 +9,11 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// New route at the root
+app.get('/', (req, res) => {
+  res.send('Hello from server');
+});
+
 app.post('/add', (req, res) => {
   const { a, b } = req.body;
   res.json({ result: a + b });
