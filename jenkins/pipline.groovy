@@ -73,44 +73,59 @@ pipeline {
 
         stage('Run Tests and Coverage') {
             steps {
-                sh 'npm run test:coverage'
+                sh 'npx jest --coverage'
             }
         }
+
+        stage('Generate HTML Coverage Report') {
+            steps {
+                script {
+                    // Ensure the coverage report directory exists
+                    def coverageReportDir = "${env.WORKSPACE}/coverage"
+                    if (fileExists(coverageReportDir)) {
+                        // Generate HTML report using the coverage report
+                        sh "npm run generate-html-report"
+                    } else {
+                        error "Coverage report directory does not exist."
+                    }
+                }
+            }
+        }
+
         stage('Publish Coverage Report') {
             steps {
                 script {
-                    def reportPath = 'coverage/lcov.info'
+                    // Publish the HTML coverage report
                     publishHTML(
                         target: [
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: 'coverage/lcov-report',
+                            reportDir: 'coverage',
                             reportFiles: 'index.html',
                             reportName: 'Code Coverage Report',
                             reportTitles: 'Coverage Report'
                         ]
                     )
-
-                    // Set the SonarQube parameter for JavaScript coverage report path
-                    env.SONAR_COVERAGE_REPORT = reportPath
                 }
             }
         }
 
         stage('Code Quality Analysis (sonarQube)') {
             steps {
-                withSonarQubeEnv('sonar-server') {
-                    sh """
-                        ${SCANNER_HOME}/bin/sonar-scanner \
-                        -Dsonar.projectName='${params.PROJECT_NAME}' \
-                        -Dsonar.projectKey='${params.PROJECT_NAME}' \
-                        -Dsonar.javascript.lcov.reportPaths="${env.SONAR_COVERAGE_REPORT}"
-                    """
+                script {
+                    // Pass the coverage report to SonarQube
+                    withSonarQubeEnv('sonar-server') {
+                        sh """
+                            ${SCANNER_HOME}/bin/sonar-scanner \
+                            -Dsonar.projectName='${params.PROJECT_NAME}' \
+                            -Dsonar.projectKey='${params.PROJECT_NAME}' \
+                            -Dsonar.javascript.lcov.reportPaths=${env.WORKSPACE}/coverage/lcov.info
+                        """
+                    }
                 }
             }
         }
-
 
         stage('Quality Analysis Gate (sonarQube)') {
             steps {
