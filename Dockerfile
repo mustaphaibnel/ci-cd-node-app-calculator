@@ -1,8 +1,10 @@
 # Use the official Node.js 16 image as the base image
 FROM node:latest
 
-# Create a non-root user with predefined UID and GID
-RUN groupadd -r webapi && useradd -r -g webapi -u 1000 webapi
+# Check if UID 1000 exists, and if not, create the user
+RUN if ! id -u 1000; then \
+        groupadd -r webapi && useradd -r -g webapi -u 1000 webapi; \
+    fi
 
 # Switch to the newly created user
 USER webapi
