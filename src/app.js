@@ -1,5 +1,9 @@
 const express = require('express');
+const helmet = require('helmet');
 const app = express();
+
+// Use helmet middleware for security headers
+app.use(helmet());
 
 // Parse JSON and url-encoded data
 app.use(express.json());
