@@ -88,6 +88,7 @@ pipeline {
         stage('Dependencies Management (npm/gradle)') {
             steps {
                 sh "npm install"
+                sh "npm run test" // Replace with your test command
             }
         }
 
