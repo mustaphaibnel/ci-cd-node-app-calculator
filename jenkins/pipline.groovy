@@ -65,6 +65,44 @@ pipeline {
             }
         }
 
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Run Tests and Coverage') {
+            steps {
+                sh 'npm run test:coverage'
+            }
+        }
+
+        stage('Publish Coverage Report') {
+            steps {
+                script {
+                    // Get the folder name from the current workspace path
+                    def workspacePath = env.WORKSPACE
+                    def folderName = workspacePath.tokenize('/').last()
+                    
+                    // Set the GitHub project parameter using the folder name
+                    currentBuild.description = "GitHub Project: ${folderName}"
+                    
+                    // Publish the coverage report
+                    publishHTML(
+                        target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: 'coverage/lcov-report',
+                            reportFiles: 'index.html',
+                            reportName: 'Code Coverage Report',
+                            reportTitles: 'Coverage Report'
+                        ]
+                    )
+                }
+            }
+        }
+
         stage('Code Quality Analysis (sonarQube)') {
             steps {
                 withSonarQubeEnv('sonar-server') {
@@ -72,6 +110,7 @@ pipeline {
                         ${SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectName='${params.PROJECT_NAME}' \
                         -Dsonar.projectKey='${params.PROJECT_NAME}'
+                        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
                     """
                 }
             }
@@ -80,17 +119,12 @@ pipeline {
         stage('Quality Analysis Gate (sonarQube)') {
             steps {
                 script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
+                    waitForQualityGate abortPipeline: true, credentialsId: 'Sonar-token'
                 }
             }
         }
 
-        stage('Dependencies Management (npm/gradle)') {
-            steps {
-                sh "npm install"
-                sh "npm run test" // Replace with your test command
-            }
-        }
+
 
         stage('Security Scanning (Trivy)') {
             steps {
@@ -104,6 +138,7 @@ pipeline {
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
+
 
         stage('Containerization (docker-hub)') {
             steps {

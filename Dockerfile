@@ -1,6 +1,12 @@
 # Use the official Node.js 16 image as the base image
 FROM node:latest
 
+# Create a non-root user with predefined UID and GID
+RUN groupadd -r webapi && useradd -r -g webapi -u 1000 webapi
+
+# Switch to the newly created user
+USER webapi
+
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -9,10 +15,6 @@ COPY package*.json ./
 
 
 
-# Install project dependencies as a non-root user
-RUN groupadd -r webapi && useradd -r -g webapi webapi && \
-    chown -R webapi:webapi /app
-USER webapi
 
 # Install project dependencies
 RUN npm install --ignore-scripts
