@@ -76,18 +76,10 @@ pipeline {
                 sh 'npm run test:coverage'
             }
         }
-
         stage('Publish Coverage Report') {
             steps {
                 script {
-                    // Get the folder name from the current workspace path
-                    def workspacePath = env.WORKSPACE
-                    def folderName = workspacePath.tokenize('/').last()
-                    
-                    // Set the GitHub project parameter using the folder name
-                    currentBuild.description = "GitHub Project: ${folderName}"
-                    
-                    // Publish the coverage report
+                    def reportPath = 'coverage/lcov.info'
                     publishHTML(
                         target: [
                             allowMissing: false,
@@ -99,6 +91,9 @@ pipeline {
                             reportTitles: 'Coverage Report'
                         ]
                     )
+
+                    // Set the SonarQube parameter for JavaScript coverage report path
+                    env.SONAR_COVERAGE_REPORT = reportPath
                 }
             }
         }
@@ -109,12 +104,13 @@ pipeline {
                     sh """
                         ${SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectName='${params.PROJECT_NAME}' \
-                        -Dsonar.projectKey='${params.PROJECT_NAME}'
-                        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+                        -Dsonar.projectKey='${params.PROJECT_NAME}' \
+                        -Dsonar.javascript.lcov.reportPaths="${env.SONAR_COVERAGE_REPORT}"
                     """
                 }
             }
         }
+
 
         stage('Quality Analysis Gate (sonarQube)') {
             steps {
