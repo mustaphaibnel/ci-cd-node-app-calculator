@@ -3,7 +3,7 @@ const helmet = require('helmet');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./src/swagger.yaml');
-
+const validateArithmeticInputs = require('./middlewares/arithmeticMiddleware');
 const app = express();
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -18,23 +18,23 @@ app.get('/', (req, res) => {
 });
 
 
-app.post('/add', (req, res) => {
+app.post('/add', validateArithmeticInputs, (req, res) => {
   const { a, b } = req.body;
   res.json({ result: a + b });
 });
 
-app.post('/subtract', (req, res) => {
+app.post('/subtract', validateArithmeticInputs, (req, res) => {
   const { a, b } = req.body;
   res.json({ result: a - b });
 });
 
-app.post('/multiply', (req, res) => {
+app.post('/multiply', validateArithmeticInputs, (req, res) => {
   const { a, b } = req.body;
   res.json({ result: a * b });
 });
 
 
-app.post('/divide', (req, res) => {
+app.post('/divide', validateArithmeticInputs, (req, res) => {
   const { a, b } = req.body;
   if (b === 0) {
     return res.status(400).json({ error: "Cannot divide by zero" });
