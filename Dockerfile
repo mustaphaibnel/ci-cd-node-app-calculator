@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:latest
+FROM node:16
 
 # Set a range for acceptable UIDs. 
 # For example, UIDs between 1000 and 9999.
