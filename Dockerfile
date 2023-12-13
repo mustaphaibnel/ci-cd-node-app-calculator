@@ -44,4 +44,4 @@ COPY --chown=webapi:webapi src/ ./src/
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "src/server.js"]
+CMD ["node", "server.js"]

@@ -174,9 +174,9 @@ stage('Code Quality Analysis (SonarQube)') {
 
         stage('Deployment') {
             steps {
-                sh 'docker stop ${params.DOCKER_IMAGE_NAME} || true'
-                sh 'docker rm ${params.DOCKER_IMAGE_NAME} || true'
-                sh 'docker run -d --name ${params.DOCKER_IMAGE_NAME} -p ${params.HOST_PORT}:${params.CONTAINER_PORT} ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest'
+                sh "docker stop ${params.DOCKER_IMAGE_NAME} || true"
+                sh "docker rm ${params.DOCKER_IMAGE_NAME} || true"
+                sh "docker run -d --name ${params.DOCKER_IMAGE_NAME} -p ${params.HOST_PORT}:${params.CONTAINER_PORT} ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
             }
         }
     }
