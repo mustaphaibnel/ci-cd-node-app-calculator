@@ -76,6 +76,7 @@ pipeline {
                     def gitUrl = params.GITHUB_URL
                     def branch = params.BRANCH
                     checkout([$class: 'GitSCM', branches: [[name: branch]], userRemoteConfigs: [[url: gitUrl]]])
+                    env.LAST_COMMIT_MESSAGE = sh(script: "git log -1 --pretty=%B", returnStdout: true).trim()
                 }
             }
         }
@@ -118,7 +119,7 @@ pipeline {
                             keepAll: true,
                             reportDir: 'coverage',
                             reportFiles: 'index.html',
-                            reportName: 'Code Coverage Report',
+                            reportName: 'Code_Coverage_Report',
                             reportTitles: 'Coverage Report'
                         ]
                     )
@@ -200,21 +201,29 @@ post {
     success {
         script {
             def buildDuration = currentBuild.durationString
-            def buildTimestamp = new Date(currentBuild.startTimeInMillis)
-
+            def buildTimestamp = new Date(currentBuild.startTimeInMillis).format("yyyy-MM-dd HH:mm:ss")
 
             def emailBody = """
                 hello,
                 good news
 
-                🏎️Build Start Time: ${buildTimestamp}
-                ⏱Build Duration: ${buildDuration}
+                ✅ Success: Pipeline Execution Report
+                #️⃣ Build Number: ${env.BUILD_NUMBER}
+
+                🏁 Build Start Time: ${buildTimestamp}
+                ⏱ Build Duration: ${buildDuration}
                 
-                ✅️Success: Pipeline Execution Report
-                #️⃣Build Number: ${env.BUILD_NUMBER}
-                📜Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/
-                🕵🏼‍♂️SonarQube Dashboard: ${params.SONARQUBE_DASHBOARD_URL}${params.PROJECT_NAME}
-                📦Dependency Check Report: ${params.JENKINS_URL}/job/${env.JOB_NAME}/lastCompletedBuild/dependency-check-findings/
+                🌿 Branch: ${params.BRANCH}
+                💬 Last Commit: ${env.LAST_COMMIT_MESSAGE}
+
+                📜 Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/
+                🕵🏼‍♂️ SonarQube Dashboard: ${params.SONARQUBE_DASHBOARD_URL}${params.PROJECT_NAME}
+                📦 Dependency Check Report: ${params.JENKINS_URL}/job/${env.JOB_NAME}/lastCompletedBuild/dependency-check-findings/
+                📋 Code Coverage Report: ${params.JENKINS_URL}/job/${env.JOB_NAME}/Code_Coverage_Report/
+                
+                
+                🌐 GitHub Repository: ${params.GITHUB_URL}
+                🐳 Docker Repository: ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}
 
                 Regards,
                 Jenkins
@@ -228,20 +237,25 @@ post {
     failure {
         script {
             def buildDuration = currentBuild.durationString
-            def buildTimestamp = new Date(currentBuild.startTimeInMillis)
-
+            def buildTimestamp = new Date(currentBuild.startTimeInMillis).format("yyyy-MM-dd HH:mm:ss")
 
             def emailBody = """
                 hello,
                 sadly bad news
+
+                🛑 Failure: Pipeline Execution Report
+                #️⃣ Build Number: ${env.BUILD_NUMBER}
+
+                🏁 Build Start Time: ${buildTimestamp}
+                ⏱ Build Duration: ${buildDuration}
+
                 
-                🏎️Build Start Time: ${buildStartTime}
-                ⏱Build Duration: ${buildDuration}
-                
-                🛑Failure: Pipeline Execution Report
-                #️⃣Build Number: ${env.BUILD_NUMBER}
-                📜Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/
+                📜 Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/
                 Please check the build link for more details.
+
+
+                🌐 GitHub Repository: ${params.GITHUB_URL}
+                🐳 Docker Repository: ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}
 
                 Regards,
                 Jenkins
@@ -253,5 +267,6 @@ post {
         }
     }
 }
+
 
 }
