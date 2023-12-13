@@ -12,8 +12,9 @@ afterAll((done) => {
 });
 
 describe('Server', () => {
-  it('should return "Hello from server" at the root', async () => {
+  it('should direct to API documentation at the root', async () => {
     const response = await request(app).get('/');
-    expect(response.text).toBe('Hello from server');
+    expect(response.text).toContain('Welcome to the Calculator API.');
+    expect(response.text).toContain('Visit <a href="/api-docs">API Documentation</a>');
   });
 });
