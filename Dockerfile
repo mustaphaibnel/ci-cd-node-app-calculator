@@ -1,4 +1,4 @@
-# Use the official Node.js 16 image as the base image
+# Use the official Node.js image as the base image
 FROM node:latest
 
 # Set a range for acceptable UIDs. 
@@ -8,10 +8,13 @@ ARG UID_MIN=1000
 ARG UID_MAX=9999
 
 # Create a non-root user with a dynamically assigned unique UID
+# Create a home directory for the user and set appropriate permissions
 RUN groupadd -r webapi && \
     for uid in $(seq $UID_MIN $UID_MAX); do \
         if ! getent passwd $uid; then \
-            useradd -r -g webapi -u $uid webapi; \
+            mkdir -p /home/webapi && \
+            chown $uid:$uid /home/webapi && \
+            useradd -r -g webapi -u $uid -d /home/webapi webapi; \
             break; \
         fi; \
     done
@@ -19,8 +22,8 @@ RUN groupadd -r webapi && \
 # Set the working directory inside the container
 WORKDIR /app
 
-# Change ownership of the /app directory to webapi user
-RUN chown webapi:webapi /app
+# Change ownership of the /app and /home/webapi directories to webapi user
+RUN chown webapi:webapi /app && chown webapi:webapi /home/webapi
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
