@@ -39,7 +39,8 @@ RUN npm install --ignore-scripts
 # Assuming all necessary files are in the 'src' directory
 # Ensure that the copied files have the correct ownership
 COPY --chown=webapi:webapi src/ ./src/
-
+# Copy server.js to the container
+COPY --chown=webapi:webapi server.js ./
 # Expose the port that the app will run on
 EXPOSE 3000
 
