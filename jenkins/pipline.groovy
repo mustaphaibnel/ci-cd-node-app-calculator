@@ -119,7 +119,7 @@ pipeline {
                             keepAll: true,
                             reportDir: 'coverage',
                             reportFiles: 'index.html',
-                            reportName: 'Code_Coverage_Report',
+                            reportName: 'CodeCoverageReport',
                             reportTitles: 'Coverage Report'
                         ]
                     )
@@ -157,7 +157,7 @@ pipeline {
 
         stage('Security Scanning (Trivy)') {
             steps {
-                sh "trivy fs . > trivyfs.txt"
+                sh "trivy fs --format json -o trivyfs.json ."
             }
         }
 
@@ -184,10 +184,9 @@ pipeline {
 
         stage('Container Security Scanning (Trivy)') {
             steps {
-                sh "trivy image ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest > trivyimage.txt" 
+                sh "trivy image --format json -o trivyimage.json ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
             }
         }
-
         stage('Deployment') {
             steps {
                 sh "docker stop ${params.DOCKER_IMAGE_NAME} || true"
@@ -202,7 +201,10 @@ post {
         script {
             def buildDuration = currentBuild.durationString
             def buildTimestamp = new Date(currentBuild.startTimeInMillis).format("yyyy-MM-dd HH:mm:ss")
-
+            def trivyFsReportUrl = "${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/artifact/trivyfs.txt"
+            def trivyImageReportUrl = "${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/artifact/trivyimage.txt"
+            
+            
             def emailBody = """
                 hello,
                 good news
@@ -219,8 +221,10 @@ post {
                 📜 Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/
                 🕵🏼‍♂️ SonarQube Dashboard: ${params.SONARQUBE_DASHBOARD_URL}${params.PROJECT_NAME}
                 📦 Dependency Check Report: ${params.JENKINS_URL}/job/${env.JOB_NAME}/lastCompletedBuild/dependency-check-findings/
-                📋 Code Coverage Report: ${params.JENKINS_URL}/job/${env.JOB_NAME}/Code_Coverage_Report/
+                📋 Code Coverage Report: ${params.JENKINS_URL}/job/${env.JOB_NAME}/CodeCoverageReport/
                 
+                🛡️ Trivy Filesystem Security Report: [View Report](${trivyFsReportUrl})
+                🛡️ Trivy Container Security Report: [View Report](${trivyImageReportUrl})                
                 
                 🌐 GitHub Repository: ${params.GITHUB_URL}
                 🐳 Docker Repository: ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}
