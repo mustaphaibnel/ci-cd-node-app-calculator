@@ -47,6 +47,16 @@ pipeline {
             defaultValue: 'mustaphaibnel@gmail.com',
             description: 'your emailto recive notification',
         )
+        string(
+            name: 'JENKINS_URL',
+            defaultValue: 'https://jenkins.guidestudio.info',
+            description: 'Jenkins Base URL'
+        )
+        string(
+            name: 'SONARQUBE_DASHBOARD_URL',
+            defaultValue: 'https://sqube.guidestudio.info/dashboard?id=',
+            description: 'SonarQube Dashboard Base URL'
+        )
     }
 
     environment {
@@ -186,30 +196,62 @@ pipeline {
         }
     }
 
-     post {
-        success {
-            script {
-                // Calculate build duration
-                def buildDuration = currentBuild.durationString
+post {
+    success {
+        script {
+            def buildDuration = currentBuild.durationString
+            def buildTimestamp = new Date(currentBuild.startTimeInMillis)
 
-                mail to: params.EMAIL_NOTIFICATION,
-                     subject: "Pipeline Success - Build #${env.BUILD_NUMBER}",
-                     body: "The pipeline has completed successfully.\n" +
-                           "Build Number: ${env.BUILD_NUMBER}\n" +
-                           "Build Duration: ${buildDuration}"
-            }
-        }
-        failure {
-            script {
-                // Calculate build duration
-                def buildDuration = currentBuild.durationString
 
-                mail to: params.EMAIL_NOTIFICATION,
-                     subject: "Pipeline Failure - Build #${env.BUILD_NUMBER}",
-                     body: "The pipeline has failed.\n" +
-                           "Build Number: ${env.BUILD_NUMBER}\n" +
-                           "Build Duration: ${buildDuration}"
-            }
+            def emailBody = """
+                hello,
+                good news
+
+                🏎️Build Start Time: ${buildTimestamp}
+                ⏱Build Duration: ${buildDuration}
+                
+                ✅️Success: Pipeline Execution Report
+                #️⃣Build Number: ${env.BUILD_NUMBER}
+                📜Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/
+                🕵🏼‍♂️SonarQube Dashboard: ${params.SONARQUBE_DASHBOARD_URL}${params.PROJECT_NAME}
+                📦Dependency Check Report: ${params.JENKINS_URL}/job/${env.JOB_NAME}/lastCompletedBuild/dependency-check-findings/
+
+                Regards,
+                Jenkins
+            """
+
+            mail to: params.EMAIL_NOTIFICATION,
+                 subject: "SUCCESS: Pipeline Build #${env.BUILD_NUMBER}",
+                 body: emailBody
         }
     }
+    failure {
+        script {
+            def buildDuration = currentBuild.durationString
+            def buildTimestamp = new Date(currentBuild.startTimeInMillis)
+
+
+            def emailBody = """
+                hello,
+                sadly bad news
+                
+                🏎️Build Start Time: ${buildStartTime}
+                ⏱Build Duration: ${buildDuration}
+                
+                🛑Failure: Pipeline Execution Report
+                #️⃣Build Number: ${env.BUILD_NUMBER}
+                📜Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/
+                Please check the build link for more details.
+
+                Regards,
+                Jenkins
+            """
+
+            mail to: params.EMAIL_NOTIFICATION,
+                 subject: "FAILURE: Pipeline Build #${env.BUILD_NUMBER}",
+                 body: emailBody
+        }
+    }
+}
+
 }
