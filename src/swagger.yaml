@@ -1,0 +1,140 @@
+swagger: '2.0'
+info:
+  title: Calculator API
+  version: 1.0.0
+  description: A simple calculator API to perform basic arithmetic operations
+host: localhost:3000
+basePath: /
+schemes:
+  - http
+paths:
+  /:
+    get:
+      summary: Welcome message
+      responses:
+        200:
+          description: Returns a welcome message.
+  /add:
+    post:
+      summary: Adds two numbers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              a:
+                type: number
+                description: First number
+              b:
+                type: number
+                description: Second number
+      responses:
+        200:
+          description: Result of addition
+          schema:
+            type: object
+            properties:
+              result:
+                type: number
+                description: Sum of the two numbers
+  /subtract:
+    post:
+      summary: Subtracts two numbers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              a:
+                type: number
+                description: First number
+              b:
+                type: number
+                description: Second number
+      responses:
+        200:
+          description: Result of subtraction
+          schema:
+            type: object
+            properties:
+              result:
+                type: number
+                description: Result of subtracting b from a
+  /multiply:
+    post:
+      summary: Multiplies two numbers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              a:
+                type: number
+                description: First number
+              b:
+                type: number
+                description: Second number
+      responses:
+        200:
+          description: Result of multiplication
+          schema:
+            type: object
+            properties:
+              result:
+                type: number
+                description: Product of the two numbers
+  /divide:
+    post:
+      summary: Divides two numbers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              a:
+                type: number
+                description: First number
+              b:
+                type: number
+                description: Second number
+      responses:
+        200:
+          description: Result of division
+          schema:
+            type: object
+            properties:
+              result:
+                type: number
+                description: Result of dividing a by b
+        400:
+          description: Error response for division by zero
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message
