@@ -26,7 +26,8 @@ WORKDIR /app
 RUN chown webapi:webapi /app && chown webapi:webapi /home/webapi
 
 # Copy package.json and package-lock.json to the container
-COPY package*.json ./
+# Ensure that the copied files have the correct ownership
+COPY --chown=webapi:webapi package*.json ./
 
 # Switch to the newly created user
 USER webapi
@@ -36,6 +37,7 @@ RUN npm install --ignore-scripts
 
 # Copy only the necessary files/directories to the container
 # Assuming all necessary files are in the 'src' directory
+# Ensure that the copied files have the correct ownership
 COPY --chown=webapi:webapi src/ ./src/
 
 # Expose the port that the app will run on
