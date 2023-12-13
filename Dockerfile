@@ -15,28 +15,28 @@ RUN groupadd -r webapi && \
             break; \
         fi; \
     done
-# Switch to the newly created user
-USER webapi
 
 # Set the working directory inside the container
 WORKDIR /app
 
+# Change ownership of the /app directory to webapi user
+RUN chown webapi:webapi /app
+
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
-
-
+# Switch to the newly created user
+USER webapi
 
 # Install project dependencies
 RUN npm install --ignore-scripts
 
 # Copy only the necessary files/directories to the container
-# Assuming all necessary files are in the 'src' or 'app' directory
-COPY src/ ./src/
+# Assuming all necessary files are in the 'src' directory
+COPY --chown=webapi:webapi src/ ./src/
 
 # Expose the port that the app will run on
 EXPOSE 3000
 
 # Start the application
-# Adjust the path if using 'app' instead of 'src'
 CMD ["node", "src/server.js"]
