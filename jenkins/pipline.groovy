@@ -42,6 +42,11 @@ pipeline {
             defaultValue: '8090',
             description: 'Host port (e.g., 8090)',
         )
+        string(
+            name: 'EMAIL_NOTIFICATION',
+            defaultValue: 'mustaphaibnel@gmail.com',
+            description: 'your emailto recive notification',
+        )
     }
 
     environment {
@@ -111,23 +116,23 @@ pipeline {
             }
         }
 
-stage('Code Quality Analysis (SonarQube)') {
-    steps {
-        script {
-            // Pass the coverage report to SonarQube
-            withSonarQubeEnv('sonar-server') {
-                sh """
-                    ${SCANNER_HOME}/bin/sonar-scanner \
-                    -Dsonar.projectName='${params.PROJECT_NAME}' \
-                    -Dsonar.projectKey='${params.PROJECT_NAME}' \
-                    -Dsonar.sources=src \
-                    -Dsonar.test.exclusions=__tests__/** \
-                    -Dsonar.javascript.lcov.reportPaths=${env.WORKSPACE}/coverage/lcov.info
-                """
+        stage('Code Quality Analysis (SonarQube)') {
+            steps {
+                script {
+                    // Pass the coverage report to SonarQube
+                    withSonarQubeEnv('sonar-server') {
+                        sh """
+                            ${SCANNER_HOME}/bin/sonar-scanner \
+                            -Dsonar.projectName='${params.PROJECT_NAME}' \
+                            -Dsonar.projectKey='${params.PROJECT_NAME}' \
+                            -Dsonar.sources=src \
+                            -Dsonar.test.exclusions=__tests__/** \
+                            -Dsonar.javascript.lcov.reportPaths=${env.WORKSPACE}/coverage/lcov.info
+                        """
+                    }
+                }
             }
         }
-    }
-}
 
         stage('Quality Analysis Gate (sonarQube)') {
             steps {
@@ -177,6 +182,33 @@ stage('Code Quality Analysis (SonarQube)') {
                 sh "docker stop ${params.DOCKER_IMAGE_NAME} || true"
                 sh "docker rm ${params.DOCKER_IMAGE_NAME} || true"
                 sh "docker run -d --name ${params.DOCKER_IMAGE_NAME} -p ${params.HOST_PORT}:${params.CONTAINER_PORT} ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
+            }
+        }
+    }
+
+     post {
+        success {
+            script {
+                // Calculate build duration
+                def buildDuration = currentBuild.durationString
+
+                mail to: params.EMAIL_NOTIFICATION,
+                     subject: "Pipeline Success - Build #${env.BUILD_NUMBER}",
+                     body: "The pipeline has completed successfully.\n" +
+                           "Build Number: ${env.BUILD_NUMBER}\n" +
+                           "Build Duration: ${buildDuration}"
+            }
+        }
+        failure {
+            script {
+                // Calculate build duration
+                def buildDuration = currentBuild.durationString
+
+                mail to: params.EMAIL_NOTIFICATION,
+                     subject: "Pipeline Failure - Build #${env.BUILD_NUMBER}",
+                     body: "The pipeline has failed.\n" +
+                           "Build Number: ${env.BUILD_NUMBER}\n" +
+                           "Build Duration: ${buildDuration}"
             }
         }
     }
