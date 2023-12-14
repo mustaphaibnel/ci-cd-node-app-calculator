@@ -201,7 +201,7 @@ stage('Container Security Scanning (Trivy)') {
                 reportDir: "${env.WORKSPACE}",
                 reportFiles: "trivyImageReport.html",
                 reportName: "Trivy Container Vulnerability Report",
-                reportTitles: "Container Report for ${imageFullName}"
+                reportTitles: "Container Report for ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
             ])
         }
     }
