@@ -182,11 +182,33 @@ pipeline {
             }
         }
 
-        stage('Container Security Scanning (Trivy)') {
-            steps {
-                sh "trivy image --format json -o trivyimage.json ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
-            }
+
+stage('Container Security Scanning (Trivy)') {
+    steps {
+        script {
+            def imageFullName = "${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
+            def customTemplatePath = "${env.WORKSPACE}/jenkins/trivy/contrib/html.tpl"
+
+            sh "trivy image --format template --template \"@${customTemplatePath}\" -o ${env.WORKSPACE}/trivyImageReport.html ${imageFullName} || true"
         }
+    }
+    post {
+        always {
+            publishHTML(target: [
+                allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: "${env.WORKSPACE}",
+                reportFiles: "trivyImageReport.html",
+                reportName: "Trivy Container Vulnerability Report",
+                reportTitles: "Container Report for ${imageFullName}"
+            ])
+        }
+    }
+}
+
+
+
         stage('Deployment') {
             steps {
                 sh "docker stop ${params.DOCKER_IMAGE_NAME} || true"
@@ -201,9 +223,8 @@ post {
         script {
             def buildDuration = currentBuild.durationString
             def buildTimestamp = new Date(currentBuild.startTimeInMillis).format("yyyy-MM-dd HH:mm:ss")
-            def trivyFsReportUrl = "${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/artifact/trivyfs.txt"
-            def trivyImageReportUrl = "${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/artifact/trivyimage.txt"
-            
+            def trivyFsReportHtmlUrl = "${params.JENKINS_URL}/job/${env.JOB_NAME}/TrivyVulnerabilityReportFile/"
+            def trivyImageReportHtmlUrl = "${params.JENKINS_URL}/job/${env.JOB_NAME}/TrivyVulnerabilityReportImage/"
             
             def emailBody = """
                 hello,
@@ -218,13 +239,13 @@ post {
                 🌿 Branch: ${params.BRANCH}
                 💬 Last Commit: ${env.LAST_COMMIT_MESSAGE}
 
-                📜 Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/
+                📜 Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console
                 🕵🏼‍♂️ SonarQube Dashboard: ${params.SONARQUBE_DASHBOARD_URL}${params.PROJECT_NAME}
                 📦 Dependency Check Report: ${params.JENKINS_URL}/job/${env.JOB_NAME}/lastCompletedBuild/dependency-check-findings/
                 📋 Code Coverage Report: ${params.JENKINS_URL}/job/${env.JOB_NAME}/CodeCoverageReport/
                 
-                🛡️ Trivy Filesystem Security Report: [View Report](${trivyFsReportUrl})
-                🛡️ Trivy Container Security Report: [View Report](${trivyImageReportUrl})                
+                🛡️ Trivy Filesystem Security Report: [View Report](${trivyFsReportHtmlUrl})
+                🛡️ Trivy Container Security Report: [View Report](${trivyImageReportHtmlUrl})                
                 
                 🌐 GitHub Repository: ${params.GITHUB_URL}
                 🐳 Docker Repository: ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}
@@ -254,7 +275,7 @@ post {
                 ⏱ Build Duration: ${buildDuration}
 
                 
-                📜 Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/
+                📜 Build Link: ${params.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console
                 Please check the build link for more details.
 
 
