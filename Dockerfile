@@ -32,6 +32,12 @@ COPY --chown=webapi:webapi package*.json ./
 # Switch to the newly created user
 USER webapi
 
+# SECURITY ALERT: Do not hardcode sensitive information such as API keys in the Dockerfile.
+# You should pass sensitive data as environment variables during runtime.
+# Example: docker run -e EXPECTED_API_KEY=your_api_key_value your-image-name
+ARG EXPECTED_API_KEY=default_api_key
+
+
 # Install project dependencies
 RUN npm install --ignore-scripts
 
