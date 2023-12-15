@@ -6,7 +6,7 @@ info:
 host: app.guidestudio.info
 basePath: /
 schemes:
-  - http
+  - https
 securityDefinitions:
   apiKeyAuth:
     type: apiKey
