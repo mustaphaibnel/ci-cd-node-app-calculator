@@ -7,6 +7,11 @@ host: localhost:3000
 basePath: /
 schemes:
   - http
+securityDefinitions:
+  apiKeyAuth:
+    type: apiKey
+    in: header
+    name: X-API-Key
 paths:
   /:
     get:
@@ -14,9 +19,23 @@ paths:
       responses:
         200:
           description: Returns a welcome message.
-  /add:
+
+  /users/validateToken:
+    get:
+      summary: Validates the API key
+      security:
+        - apiKeyAuth: []
+      responses:
+        200:
+          description: API key is valid
+        401:
+          description: Unauthorized, invalid API key
+
+  /api/v1/calculator/add:
     post:
       summary: Adds two numbers
+      security:
+        - apiKeyAuth: []
       consumes:
         - application/json
       produces:
@@ -43,9 +62,14 @@ paths:
               result:
                 type: number
                 description: Sum of the two numbers
-  /subtract:
+        401:
+          description: Unauthorized, invalid API key
+
+  /api/v1/calculator/subtract:
     post:
       summary: Subtracts two numbers
+      security:
+        - apiKeyAuth: []
       consumes:
         - application/json
       produces:
@@ -71,10 +95,15 @@ paths:
             properties:
               result:
                 type: number
-                description: Result of subtracting b from a
-  /multiply:
+                description: Result of subtraction
+        401:
+          description: Unauthorized, invalid API key
+
+  /api/v1/calculator/multiply:
     post:
       summary: Multiplies two numbers
+      security:
+        - apiKeyAuth: []
       consumes:
         - application/json
       produces:
@@ -100,10 +129,15 @@ paths:
             properties:
               result:
                 type: number
-                description: Product of the two numbers
-  /divide:
+                description: Result of multiplication
+        401:
+          description: Unauthorized, invalid API key
+
+  /api/v1/calculator/divide:
     post:
       summary: Divides two numbers
+      security:
+        - apiKeyAuth: []
       consumes:
         - application/json
       produces:
@@ -129,12 +163,6 @@ paths:
             properties:
               result:
                 type: number
-                description: Result of dividing a by b
-        400:
-          description: Error response for division by zero
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                description: Error message
+                description: Result of division
+        401:
+          description: Unauthorized, invalid API key

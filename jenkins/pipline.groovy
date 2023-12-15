@@ -17,10 +17,13 @@ pipeline {
         string(name: 'EMAIL_NOTIFICATION', defaultValue: 'mustaphaibnel@gmail.com', description: 'Email for notifications')
         string(name: 'JENKINS_URL', defaultValue: 'https://jenkins.guidestudio.info', description: 'Jenkins Base URL')
         string(name: 'SONARQUBE_DASHBOARD_URL', defaultValue: 'https://sqube.guidestudio.info/dashboard?id=', description: 'SonarQube Dashboard Base URL')
+        string(name: 'API_END_POINT_URL', defaultValue: 'https://app.guidestudio.info/', description: 'App Base URL')
     }
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
+        MOCK_API_KEY = 'mock_api_key_value'
+        EXPECTED_API_KEY = credentials('api-key-calculator-prod')
     }
 
     stages {
@@ -47,9 +50,14 @@ pipeline {
             }
         }
 
+
         stage('Run Tests and Coverage') {
             steps {
-                sh 'npm run test:coverage'
+                script {
+                    withEnv(["EXPECTED_API_KEY=${env.MOCK_API_KEY}"]) {
+                        sh 'npm run test:coverage'
+                    }
+                }
             }
         }
 
@@ -59,14 +67,21 @@ pipeline {
                     sh "mkdir -p ${env.WORKSPACE}/reports/coverage"
                     def coverageReportDir = "${env.WORKSPACE}/coverage"
                     if (fileExists(coverageReportDir)) {
+                        // Set EXPECTED_API_KEY to MOCK_API_KEY temporarily
+                        env.EXPECTED_API_KEY = env.MOCK_API_KEY
+
                         sh "npm run generate-html-report"
                         sh "cp -r ${coverageReportDir}/* ${env.WORKSPACE}/reports/coverage/"
+
+                        // Reset EXPECTED_API_KEY to the original value
+                        env.EXPECTED_API_KEY = credentials('YourCredentialId')
                     } else {
                         error "Coverage report directory does not exist."
                     }
                 }
             }
         }
+
 
         stage('Publish Coverage Report') {
             steps {
@@ -79,7 +94,7 @@ pipeline {
                             reportDir: "${WORKSPACE}/reports/coverage",
                             reportFiles: 'index.html',
                             reportName: 'CodeCoverageReport',
-                            reportTitles: 'Coverage Report'
+                            reportTitles: 'Coverage Report '
                         ]
                     )
                 }
@@ -111,7 +126,7 @@ pipeline {
             }
         }
 
-        stage('Security Scanning (Trivy)') {
+        stage('Security Files Scanning (Trivy)') {
             steps {
                 sh "mkdir -p ${env.WORKSPACE}/reports/trivy"
                 sh "trivy fs --format json -o ${env.WORKSPACE}/reports/trivy/trivyfs.json ."
@@ -159,13 +174,30 @@ pipeline {
                 }
             }
         }
-        stage('Deployment') {
+        stage('Deployment (Stages:prod,dev...)') {
             steps {
-                sh "docker stop ${params.DOCKER_IMAGE_NAME} || true"
-                sh "docker rm ${params.DOCKER_IMAGE_NAME} || true"
-                sh "docker run -d --name ${params.DOCKER_IMAGE_NAME} -p ${params.HOST_PORT}:${params.CONTAINER_PORT} ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
+                def dockerImageName = "${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
+                def containerName = params.DOCKER_IMAGE_NAME
+                def hostPort = params.HOST_PORT
+                def containerPort = params.CONTAINER_PORT
+                def expectedApiKey = env.EXPECTED_API_KEY
+
+                script {
+                    // Stop and remove the container if it exists (ignore errors)
+                    sh "docker stop ${containerName} || true"
+                    sh "docker rm ${containerName} || true"
+
+                    // Run the Docker container with the EXPECTED_API_KEY as an environment variable
+                    sh """
+                        docker run -d --name ${containerName} \
+                        -e EXPECTED_API_KEY=${expectedApiKey} \
+                        -p ${hostPort}:${containerPort} \
+                        ${dockerImageName}
+                    """
+                }
             }
         }
+
     }
 
     post {
@@ -199,6 +231,9 @@ pipeline {
                 
                     🌐 GitHub Repository: ${params.GITHUB_URL}
                     🐳 Docker Repository: ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}
+
+                    
+                    🌍 API Endpoint: ${params.API_END_POINT_URL}
 
                     Regards,
                     Jenkins
