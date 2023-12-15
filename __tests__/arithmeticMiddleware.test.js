@@ -19,5 +19,36 @@ describe('arithmeticMiddleware', () => {
     expect(next).not.toHaveBeenCalled();
   });
 
-  // Additional tests for division by zero and valid inputs
+  it('should return 400 for division by zero', () => {
+    const req = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/calculator/divide',
+      body: { a: 5, b: 0 } // Division by zero
+    });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
+  
+    arithmeticMiddleware(req, res, next);
+  
+    expect(res.statusCode).toBe(400); // This expectation should pass
+    const data = JSON.parse(res._getData());
+    expect(data.error).toBe('Cannot divide by zero.'); // This expectation should pass
+    expect(next).not.toHaveBeenCalled(); // This expectation should pass
+  });
+  
+
+  it('should pass for valid numeric inputs', () => {
+    const req = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/calculator/add',
+      body: { a: 5, b: 3 }
+    });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
+
+    arithmeticMiddleware(req, res, next);
+
+    expect(res.statusCode).toBe(200);
+    expect(next).toHaveBeenCalled();
+  });
 });

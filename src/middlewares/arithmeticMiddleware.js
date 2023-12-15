@@ -8,11 +8,10 @@ function validateArithmeticInputs(req, res, next) {
         return res.status(400).json({ error: "Invalid input: Inputs must be numbers." });
     }
 
-    // Additional check for division route to prevent division by zero
-    if (req.path === '/divide' && b === 0) {
-        return res.status(400).json({ error: "Cannot divide by zero." });
+    const endpoint = req.url.split('/').pop(); // Extract the last part of the URL
+    if (endpoint === 'divide' && b === 0) {
+      return res.status(400).json({ error: "Cannot divide by zero." });
     }
-
     next();
 }
 

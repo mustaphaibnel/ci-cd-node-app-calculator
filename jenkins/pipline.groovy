@@ -176,28 +176,11 @@ pipeline {
         }
         stage('Deployment (Stages:prod,dev...)') {
             steps {
-                def dockerImageName = "${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
-                def containerName = params.DOCKER_IMAGE_NAME
-                def hostPort = params.HOST_PORT
-                def containerPort = params.CONTAINER_PORT
-                def expectedApiKey = env.EXPECTED_API_KEY
-
-                script {
-                    // Stop and remove the container if it exists (ignore errors)
-                    sh "docker stop ${containerName} || true"
-                    sh "docker rm ${containerName} || true"
-
-                    // Run the Docker container with the EXPECTED_API_KEY as an environment variable
-                    sh """
-                        docker run -d --name ${containerName} \
-                        -e EXPECTED_API_KEY=${expectedApiKey} \
-                        -p ${hostPort}:${containerPort} \
-                        ${dockerImageName}
-                    """
-                }
+                sh "docker stop ${params.DOCKER_IMAGE_NAME} || true"
+                sh "docker rm ${params.DOCKER_IMAGE_NAME} || true"
+                sh "docker run -d --name ${params.DOCKER_IMAGE_NAME} -e EXPECTED_API_KEY=${env.EXPECTED_API_KEY}  -p ${params.HOST_PORT}:${params.CONTAINER_PORT} ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
             }
         }
-
     }
 
     post {
