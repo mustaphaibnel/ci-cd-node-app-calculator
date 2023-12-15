@@ -3,7 +3,7 @@ info:
   title: Calculator API
   version: 1.0.0
   description: A simple calculator API to perform basic arithmetic operations
-host: localhost:3000
+host: app.guidestudio.info
 basePath: /
 schemes:
   - http
