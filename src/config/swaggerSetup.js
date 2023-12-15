@@ -2,7 +2,7 @@ const swaggerUi = require('swagger-ui-express');
 const fs = require('fs');
 const jsYaml = require('js-yaml');
 
-const setupSwagger = (app) => {
+const swaggerSetup = (app) => {
     const swaggerYAMLPath = './src/swagger.yaml';
     const swaggerDocument = jsYaml.load(fs.readFileSync(swaggerYAMLPath, 'utf8'));
 
@@ -16,4 +16,4 @@ const setupSwagger = (app) => {
     });
 };
 
-module.exports = setupSwagger;
+module.exports = swaggerSetup;

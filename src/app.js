@@ -1,6 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
-const swaggerSetup = require('../config/swaggerSetup'); // Separate Swagger setup
+const swaggerSetup = require('./config/swaggerSetup'); // Separate Swagger setup
 const calculatorRoutes = require('./routes/calculatorRoutes');
 const userRoutes = require('./routes/userRoutes');
 const dotenv = require('dotenv');
