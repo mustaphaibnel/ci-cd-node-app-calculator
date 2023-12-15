@@ -174,13 +174,27 @@ pipeline {
                 }
             }
         }
-        stage('Deployment (Stages:prod,dev...)') {
-            steps {
+    stage('Deployment (Stages:prod,dev...)') {
+        steps {
+            script {
+                // Stopping and removing the container if it exists
                 sh "docker stop ${params.DOCKER_IMAGE_NAME} || true"
                 sh "docker rm ${params.DOCKER_IMAGE_NAME} || true"
-                sh "docker run -d --name ${params.DOCKER_IMAGE_NAME} -e EXPECTED_API_KEY=${env.EXPECTED_API_KEY}  -p ${params.HOST_PORT}:${params.CONTAINER_PORT} ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
+
+                // Pulling the latest version of the Docker image
+                sh "docker pull ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
+
+                // Building the docker run command
+                def dockerRunCmd = "docker run -d --name ${params.DOCKER_IMAGE_NAME} " +
+                                   "-e EXPECTED_API_KEY=\$EXPECTED_API_KEY " +
+                                   "-p ${params.HOST_PORT}:${params.CONTAINER_PORT} " +
+                                   "${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
+
+                // Running the docker command with the environment variable
+                sh(script: dockerRunCmd, environment: ['EXPECTED_API_KEY': env.EXPECTED_API_KEY])
             }
         }
+    }
     }
 
     post {
