@@ -37,6 +37,10 @@ USER webapi
 # Example: docker run -e EXPECTED_API_KEY=your_api_key_value your-image-name
 ARG EXPECTED_API_KEY=default_api_key
 
+ARG ELASTIC_APM_ACTIVE=true
+ARG APM_SERVICE_NAME=ci-cd-node-app-calculator
+ARG APM_SECRET_TOKEN=
+ARG APM_SERVER_URL=https://apm.guidestudio.info
 
 # Install project dependencies
 RUN npm install --ignore-scripts
