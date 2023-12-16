@@ -61,8 +61,6 @@ This stage runs tests and generates coverage reports.
       <p>Run Tests</p>
     </td>
     <td>
-    <img src="images/run-tests-2.png" alt="Run Tests" width="400"/>
-    <p>Run Tests</p>
     </td>
   </tr>
 </table>
@@ -133,7 +131,7 @@ This stage performs security benchmarking using OWASP.
 <table>
   <tr>
     <td>
-      <img src="images/security-benchmark-1.png" alt="OWASP Benchmark Step 1" width="400"/>
+      <img src="images/security-benchmarking-1.png" alt="OWASP Benchmark Step 1" width="400"/>
       <p>OWASP Benchmark Step 1</p>
     </td>
     <td>
@@ -196,7 +194,10 @@ The pipeline is configured to send email notifications upon completion of the bu
       <img src="images/email-notification-1.png" alt="Email Notification" width="400"/>
       <p>Email Notification Example</p>
     </td>
-    <!-- Add more images if necessary -->
+    <td>
+      <img src="images/email-notification-2.png" alt="Email Notification" width="400"/>
+      <p>Email Notification Example</p>
+    </td>
   </tr>
 </table>
 
@@ -204,6 +205,10 @@ The pipeline is configured to send email notifications upon completion of the bu
 The API is documented with Swagger, offering an interactive interface for exploring the API endpoints and their responses.
 <table>
   <tr>
+    <td>
+      <img src="images/swagger-documentation-1.png" alt="Swagger Documentation" width="400"/>
+      <p>Swagger API Documentation</p>
+    </td>
     <td>
       <img src="images/swagger-documentation-1.png" alt="Swagger Documentation" width="400"/>
       <p>Swagger API Documentation</p>
@@ -225,6 +230,7 @@ A Postman collection is available for testing the API endpoints. This collection
 </table>
 
 ### Docker Container Monitoring
+
 Docker containers are monitored to ensure they are running as expected. This includes monitoring resource usage, uptime, and health status.
 <table>
   <tr>
@@ -232,12 +238,15 @@ Docker containers are monitored to ensure they are running as expected. This inc
       <img src="images/docker-monitoring-1.png" alt="Docker Container Monitoring" width="400"/>
       <p>Docker Container Monitoring(Elastic Stack)</p>
     </td>
+        <td>
     <img src="images/docker-monitoring-2.png" alt="Docker Container Monitoring" width="400"/>
       <p>Docker Container Monitoring(Portainer)</p>
+      </td>
   </tr>
 </table>
 
 ### Application Performance Monitoring
+
 The application is monitored using tools like Elastic APM, providing insights into performance metrics, error rates, and response times. This helps in understanding the application behavior under various conditions.
 <table>
   <tr>
