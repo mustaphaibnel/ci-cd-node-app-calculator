@@ -1,8 +1,21 @@
 # Project Title
 
-![Project Overview](images/overview.gif)
-
 Brief description of your project: A fully implemented simple calculator API that exemplifies best practices and a full workflow in a CI/CD pipeline.
+
+
+<table>
+  <tr>
+    <td>
+      <img src="images/overview.gif" alt="Swagger Documentation" width="400"/>
+      <p>overview API CI CD</p>
+    </td>
+    <td>
+      <img src="images/overview.png" alt="Swagger Documentation" width="400"/>
+      <p>overview API CI CD</p>
+    </td>
+    <!-- Add more images if necessary -->
+  </tr>
+</table>
 
 ## Jenkins CI/CD Pipeline Stages
 
@@ -222,10 +235,13 @@ A Postman collection is available for testing the API endpoints. This collection
 <table>
   <tr>
     <td>
-      <img src="images/postman-testing.png" alt="Postman Testing" width="400"/>
+      <img src="images/postman-testing-1.png" alt="Postman Testing" width="400"/>
       <p>Postman API Testing</p>
     </td>
-    <!-- Add more images if necessary -->
+    <td>
+      <img src="images/postman-testing-2.png" alt="Postman Testing" width="400"/>
+      <p>Postman API Testing</p>
+    </td>
   </tr>
 </table>
 
@@ -260,20 +276,28 @@ The application is monitored using tools like Elastic APM, providing insights in
 
 ## Environment Variables and Parameters
 
-[Include the section as previously provided]
+To successfully run this Jenkins pipeline, specific environment variables and parameters need to be defined. These are used throughout the pipeline to customize the build and deployment process.
 
+### Required Environment Variables:
+
+- `SCANNER_HOME`: Specifies the home directory of the Sonar scanner.
+- `MOCK_API_KEY` and `EXPECTED_API_KEY`: Used for API authentication during testing.
+- Additional environment variables for Elastic APM as discussed earlier, like `APM_SERVICE_NAME`, `APM_SECRET_TOKEN`, and `APM_SERVER_URL`.
+
+### Adjusting Pipeline Parameters:
+
+The pipeline includes several parameters that you may need to adjust according to your environment:
+- `GITHUB_URL`: URL of the GitHub repository.
+- `BRANCH`: The branch to deploy.
+- `PROJECT_NAME`, `DOCKER_USERNAME`, `DOCKER_IMAGE_NAME`: Used in the Dockerization stage.
+- `CONTAINER_PORT`, `HOST_PORT`: Port configurations.
+- `EMAIL_NOTIFICATION`: For sending build status emails.
+- `JENKINS_URL`, `SONARQUBE_DASHBOARD_URL`, `API_END_POINT_URL`: Relevant URLs for the Jenkins server, SonarQube dashboard, and the API endpoint.
+### Elastic APM Configuration:
+To enable Elastic APM monitoring, set the following environment variables:
+- `ELASTIC_APM_ACTIVE`: Set to `true` to activate Elastic APM.
+- `APM_SERVICE_NAME`: The name of your service.
+- `APM_SECRET_TOKEN`: Secret token for APM Server.
+- `APM_SERVER_URL`: URL of the APM Server.
 ## GitHub Actions Integration
-
-[Include the section as previously provided]
-
-## How to Use the Calculator API
-
-Provide detailed instructions on how to interact with the calculator API, including example requests and responses for each endpoint.
-
-## Post-Deployment Activities
-
-[Include sections on Email Notifications, Manual Testing, Stress Testing and API Testing, Monitoring with Elastic APM]
-
-## Stack Implementation Details
-
-[Include details on the technology stack]
+To trigger this Jenkins pipeline through GitHub Actions, you need to set up a GitHub Actions workflow. The workflow should include steps to invoke the Jenkins pipeline whenever code is pushed to the specified branch or when a pull request is made.
