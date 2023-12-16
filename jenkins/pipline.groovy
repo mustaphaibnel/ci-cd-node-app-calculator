@@ -24,6 +24,10 @@ pipeline {
         SCANNER_HOME = tool 'sonar-scanner'
         MOCK_API_KEY = 'mock_api_key_value'
         EXPECTED_API_KEY = credentials('api-key-calculator-prod')
+        ELASTIC_APM_ACTIVE= true
+        APM_SERVICE_NAME= params.DOCKER_IMAGE_NAME
+        APM_SECRET_TOKEN= ""
+        APM_SERVER_URL= "https://apm.guidestudio.info"
     }
 
     stages {
@@ -174,27 +178,39 @@ pipeline {
                 }
             }
         }
-    stage('Deployment (Stages:prod,dev...)') {
-        steps {
-            script {
-                // Stopping and removing the container if it exists
-                sh "docker stop ${params.DOCKER_IMAGE_NAME} || true"
-                sh "docker rm ${params.DOCKER_IMAGE_NAME} || true"
+stage('Deployment (Stages:prod,dev...)') {
+    steps {
+        script {
+            // Stopping and removing the container if it exists
+            sh "docker stop ${params.DOCKER_IMAGE_NAME} || true"
+            sh "docker rm ${params.DOCKER_IMAGE_NAME} || true"
 
-                // Pulling the latest version of the Docker image
-                sh "docker pull ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
+            // Pulling the latest version of the Docker image
+            sh "docker pull ${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
 
-                // Building the docker run command
-                def dockerRunCmd = "docker run -d --name ${params.DOCKER_IMAGE_NAME} " +
-                                   "-e EXPECTED_API_KEY=\$EXPECTED_API_KEY " +
-                                   "-p ${params.HOST_PORT}:${params.CONTAINER_PORT} " +
-                                   "${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
+            // Building the docker run command with additional environment variables
+            def dockerRunCmd = "docker run -d --name ${params.DOCKER_IMAGE_NAME} " +
+                               "-e EXPECTED_API_KEY=\$EXPECTED_API_KEY " +
+                               "-e ELASTIC_APM_ACTIVE=\$ELASTIC_APM_ACTIVE " +
+                               "-e APM_SERVICE_NAME=\$APM_SERVICE_NAME " +
+                               "-e APM_SECRET_TOKEN=\$APM_SECRET_TOKEN " +
+                               "-e APM_SERVER_URL=\$APM_SERVER_URL " +
+                               "-p ${params.HOST_PORT}:${params.CONTAINER_PORT} " +
+                               "${params.DOCKER_USERNAME}/${params.DOCKER_IMAGE_NAME}:latest"
 
-                // Running the docker command with the environment variable
-                sh(script: dockerRunCmd, environment: ['EXPECTED_API_KEY': env.EXPECTED_API_KEY])
-            }
+            // Running the docker command with the environment variables
+            sh(script: dockerRunCmd, environment: [
+                'EXPECTED_API_KEY': env.EXPECTED_API_KEY,
+                'ELASTIC_APM_ACTIVE': env.ELASTIC_APM_ACTIVE,
+                'APM_SERVICE_NAME': env.APM_SERVICE_NAME,
+                'APM_SECRET_TOKEN': env.APM_SECRET_TOKEN,
+                'APM_SERVER_URL': env.APM_SERVER_URL
+            ])
         }
     }
+}
+
+
     }
 
     post {
