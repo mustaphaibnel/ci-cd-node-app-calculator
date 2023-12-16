@@ -32,7 +32,8 @@ This stage checks out the code from the GitHub repository.
       <p>Checkout Code</p>
     </td>
     <td>
-      <!-- Placeholder for second image if needed -->
+    <img src="images/checkout-code-2.png" alt="Checkout Code" width="400"/>
+      <p>Checkout Code</p>
     </td>
   </tr>
 </table>
@@ -60,7 +61,8 @@ This stage runs tests and generates coverage reports.
       <p>Run Tests</p>
     </td>
     <td>
-      <!-- Placeholder for second image if needed -->
+    <img src="images/run-tests-2.png" alt="Run Tests" width="400"/>
+    <p>Run Tests</p>
     </td>
   </tr>
 </table>
@@ -112,18 +114,6 @@ This stage analyzes the code quality using SonarQube.
 
 ### Quality Analysis Gate (SonarQube)
 This stage waits for the quality gate result from SonarQube.
-<table>
-  <tr>
-    <td>
-      <img src="images/quality-gate-1.png" alt="Quality Gate Step 1" width="400"/>
-      <p>Quality Gate Step 1</p>
-    </td>
-    <td>
-      <img src="images/quality-gate-2.png" alt="Quality Gate Step 2" width="400"/>
-      <p>Quality Gate Step 2</p>
-    </td>
-  </tr>
-</table>
 
 ### Security Files Scanning (Trivy)
 This stage scans security files using Trivy.
@@ -134,8 +124,6 @@ This stage scans security files using Trivy.
       <p>Trivy File Scan</p>
     </td>
     <td>
-      <img src="images/trivy-file-scan-2.png" alt="Trivy File Scan" width="400"/>
-      <p>Trivy File Scan</p>
     </td>
   </tr>
 </table>
@@ -145,12 +133,10 @@ This stage performs security benchmarking using OWASP.
 <table>
   <tr>
     <td>
-      <img src="images/owasp-benchmark-1.png" alt="OWASP Benchmark Step 1" width="400"/>
+      <img src="images/security-benchmark-1.png" alt="OWASP Benchmark Step 1" width="400"/>
       <p>OWASP Benchmark Step 1</p>
     </td>
     <td>
-      <img src="images/owasp-benchmark-2.png" alt="OWASP Benchmark Step 2" width="400"/>
-      <p>OWASP Benchmark Step 2</p>
     </td>
   </tr>
 </table>
