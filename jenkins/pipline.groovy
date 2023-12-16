@@ -25,7 +25,7 @@ pipeline {
         MOCK_API_KEY = 'mock_api_key_value'
         EXPECTED_API_KEY = credentials('api-key-calculator-prod')
         ELASTIC_APM_ACTIVE= true
-        APM_SERVICE_NAME= ${params.DOCKER_IMAGE_NAME}
+        APM_SERVICE_NAME= "${params.DOCKER_IMAGE_NAME}"
         APM_SECRET_TOKEN= ""
         APM_SERVER_URL= "https://apm.guidestudio.info"
     }

@@ -11,20 +11,18 @@ dotenv.config();
 
 // Initialize Elastic APM if ELASTIC_APM_ACTIVE is 'true'
 if (process.env.ELASTIC_APM_ACTIVE === 'true') {
-    const apm = require('elastic-apm-node').start({
+    require('elastic-apm-node').start({
         // Override service name from package.json or use an environment variable
         serviceName: process.env.APM_SERVICE_NAME || 'default-service-name',
-
         // Use an environment variable for the secret token
         secretToken: process.env.APM_SECRET_TOKEN || '',
-
         // Use an environment variable for the APM Server URL
         serverUrl: process.env.APM_SERVER_URL || 'http://localhost:8200',
-
         // Set the service environment
         environment: process.env.APM_ENVIRONMENT || 'production',
     });
 }
+
 
 const app = express();
 

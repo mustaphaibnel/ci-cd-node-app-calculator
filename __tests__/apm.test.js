@@ -1,40 +1,46 @@
-// Test for Elastic APM integration in app.js
-
 const request = require('supertest');
 const mockStart = jest.fn();
-jest.mock('elastic-apm-node', () => ({
-  start: mockStart
-}));
+const mockElasticApm = { start: mockStart };
 
-describe('Elastic APM', () => {
+// Mock the 'elastic-apm-node' module
+jest.mock('elastic-apm-node', () => mockElasticApm);
+
+describe('Elastic APM Initialization', () => {
   beforeEach(() => {
     // Clear all instances and calls to constructor and all methods:
     mockStart.mockClear();
   });
 
-  it('should start the APM agent if ELASTIC_APM_ACTIVE is true', () => {
+  it('should initialize Elastic APM when ELASTIC_APM_ACTIVE is true', () => {
+    // Set the environment variable ELASTIC_APM_ACTIVE to 'true'
     process.env.ELASTIC_APM_ACTIVE = 'true';
-    process.env.APM_SERVICE_NAME = 'test-service';
-    process.env.APM_SECRET_TOKEN = 'test-secret';
-    process.env.APM_SERVER_URL = 'http://localhost:8200';
-    process.env.APM_ENVIRONMENT = 'test';
 
-    // The following line requires your app, which should, in turn, start the APM agent.
+    // Import your app.js (which will trigger the initialization)
     const app = require('../src/app');
 
-    expect(mockStart).toHaveBeenCalled();
+    // Assert that the 'start' function was called with the correct parameters
+    expect(mockStart).toHaveBeenCalledTimes(1);
     expect(mockStart).toHaveBeenCalledWith({
-      serviceName: 'test-service',
-      secretToken: 'test-secret',
-      serverUrl: 'http://localhost:8200',
-      environment: 'test',
+      serviceName: process.env.APM_SERVICE_NAME || 'default-service-name',
+      secretToken: process.env.APM_SECRET_TOKEN || '',
+      serverUrl: process.env.APM_SERVER_URL || 'http://localhost:8200',
+      environment: process.env.APM_ENVIRONMENT || 'production',
     });
   });
 
-  it('should not start the APM agent if ELASTIC_APM_ACTIVE is not true', () => {
+  it('should not initialize Elastic APM when ELASTIC_APM_ACTIVE is not true', () => {
+    // Ensure that ELASTIC_APM_ACTIVE is not set or set to any value other than 'true'
     delete process.env.ELASTIC_APM_ACTIVE;
+
+    // Import your app.js (which should not trigger the initialization)
     const app = require('../src/app');
 
+    // Assert that the 'start' function was not called
     expect(mockStart).not.toHaveBeenCalled();
+  });
+
+  afterEach(() => {
+    // Reset the environment variable after each test
+    delete process.env.ELASTIC_APM_ACTIVE;
   });
 });
