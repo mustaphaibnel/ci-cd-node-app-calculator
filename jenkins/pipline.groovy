@@ -58,12 +58,19 @@ pipeline {
         stage('Run Tests and Coverage') {
             steps {
                 script {
-                    withEnv(["EXPECTED_API_KEY=${env.MOCK_API_KEY}"]) {
+                    withEnv([
+                        "EXPECTED_API_KEY=${env.MOCK_API_KEY}",
+                        "ELASTIC_APM_ACTIVE=${env.ELASTIC_APM_ACTIVE}",
+                        "APM_SERVICE_NAME=${env.APM_SERVICE_NAME}",
+                        "APM_SECRET_TOKEN=${env.APM_SECRET_TOKEN}",
+                        "APM_SERVER_URL=${env.APM_SERVER_URL}"
+                    ]) {
                         sh 'npm run test:coverage'
                     }
                 }
             }
         }
+
 
         stage('Generate HTML Coverage Report') {
             steps {
