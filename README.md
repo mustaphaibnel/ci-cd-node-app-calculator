@@ -43,21 +43,53 @@ Clone the repository to get started and follow our [setup guide](#setup-guide) f
    - [Elastic APM Configuration](#elastic-apm-configuration)
 5. [GitHub Actions Integration](#github-actions-integration)
 
-# Project Overview
+## Project Overview
+
+This project showcases a Node.js Calculator API with an integrated CI/CD pipeline, ensuring best practices for code quality, security, and deployment.
+
 <table>
   <tr>
     <td>
-      <img src="images/overview.gif" alt="Swagger Documentation" width="400"/>
-      <p>overview API CI CD</p>
+      <img src="images/overview.gif" alt="Swagger Documentation" height="auto"/>
     </td>
     <td>
-      <img src="images/overview.png" alt="Swagger Documentation" width="400"/>
-      <p>overview API CI CD</p>
+      <img src="images/overview.png" alt="Swagger Documentation" height="auto"/>
     </td>
     <!-- Add more images if necessary -->
   </tr>
 </table>
 
+## CI/CD Pipeline Workflow
+
+### 1. Development
+Developers write code and commit changes to GitHub, triggering the CI/CD pipeline.
+
+### 2. Jenkins Automation
+Jenkins processes each commit, handling automated builds, tests, and deployment preparations.
+
+### 3. Quality and Security
+- **SonarQube** analyzes code quality.
+- **Trivy** scans for security vulnerabilities.
+- **NPM** manages dependencies.
+- **OWASP** sets security benchmarking.
+
+### 4. Dockerization
+The application is containerized for consistent deployment and scanned by Trivy for container security.
+
+### 5. Deployment
+Automated deployment to production with an emphasis on continuous improvement.
+
+## Monitoring and Performance
+
+The ELK stack monitors application performance, while stress tests ensure scalability under load.
+
+## Quickstart
+
+```sh
+git clone https://github.com/mustaphaibnel/ci-cd-node-app-calculator.git
+cd ci-cd-node-app-calculator
+# Follow setup instructions...
+```
 ## Jenkins CI/CD Pipeline Stages
 
 This section describes each stage of the Jenkins CI/CD pipeline for the project, showcasing the various stages from code checkout to deployment, ensuring code quality, security, and seamless integration and delivery.
