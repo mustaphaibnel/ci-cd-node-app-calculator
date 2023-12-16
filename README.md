@@ -1,8 +1,49 @@
-# Project Title
+Welcome to the repository of our CI/CD Node.js Calculator Application, a model of modern software engineering practices with a robust calculator API. This project is a showcase of best practices in continuous integration and continuous deployment (CI/CD) tailored for Node.js applications.
 
-Brief description of your project: A fully implemented simple calculator API that exemplifies best practices and a full workflow in a CI/CD pipeline.
+## Project Highlights
 
+- **Robust Calculator API**: Provides basic arithmetic operations, designed for efficiency and reliability.
+- **Advanced CI/CD Pipeline**: Features a fully integrated Jenkins pipeline, covering all stages from code checkout to deployment.
+- **Quality and Security Assurance**: Integrates code quality checks, security scanning (SonarQube, Trivy, OWASP), and automated testing, ensuring top-notch code integrity.
+- **Stress Testing & Scalability**: Implements API stress testing to manage scaling up and down efficiently, guaranteeing performance under load.
+- **Comprehensive Monitoring**: Utilizes the ELK stack for thorough monitoring of the application stack and performance, ensuring high availability and real-time insights.
+- **Extensive Documentation**: Includes detailed Swagger documentation for a clear understanding of API functionalities.
+- **Containerization with Docker**: Demonstrates practical use of Docker for simplified deployment and scalability.
 
+## Getting Started
+
+Clone the repository to get started and follow our [setup guide](#setup-guide) for detailed instructions on installation, environment setup, and running the application.
+
+# Table of Contents
+
+1. [Project Overview](#project-overview)
+2. [Jenkins CI/CD Pipeline Stages](#jenkins-cicd-pipeline-stages)
+   - [Prepare Environment](#prepare-environment)
+   - [Checkout Code](#checkout-code)
+   - [Install Dependencies](#install-dependencies)
+   - [Run Tests and Coverage](#run-tests-and-coverage)
+   - [Generate HTML Coverage Report](#generate-html-coverage-report)
+   - [Publish Coverage Report](#publish-coverage-report)
+   - [Code Quality Analysis (SonarQube)](#code-quality-analysis-sonarqube)
+   - [Quality Analysis Gate (SonarQube)](#quality-analysis-gate-sonarqube)
+   - [Security Files Scanning (Trivy)](#security-files-scanning-trivy)
+   - [Security Benchmarking (OWASP)](#security-benchmarking-owasp)
+   - [Containerization (Docker)](#containerization-docker)
+   - [Container Security Scanning (Trivy)](#container-security-scanning-trivy)
+   - [Deployment](#deployment)
+3. [Post-Deployment Activities](#post-deployment-activities)
+   - [Email Notifications](#email-notifications)
+   - [Swagger Documentation](#swagger-documentation)
+   - [Postman Testing](#postman-testing)
+   - [Docker Container Monitoring](#docker-container-monitoring)
+   - [Application Performance Monitoring](#application-performance-monitoring)
+4. [Environment Variables and Parameters](#environment-variables-and-parameters)
+   - [Required Environment Variables](#required-environment-variables)
+   - [Adjusting Pipeline Parameters](#adjusting-pipeline-parameters)
+   - [Elastic APM Configuration](#elastic-apm-configuration)
+5. [GitHub Actions Integration](#github-actions-integration)
+
+# Project Overview
 <table>
   <tr>
     <td>
@@ -301,3 +342,12 @@ To enable Elastic APM monitoring, set the following environment variables:
 - `APM_SERVER_URL`: URL of the APM Server.
 ## GitHub Actions Integration
 To trigger this Jenkins pipeline through GitHub Actions, you need to set up a GitHub Actions workflow. The workflow should include steps to invoke the Jenkins pipeline whenever code is pushed to the specified branch or when a pull request is made.
+
+
+## Contributing
+
+Contributions are welcome! Feel free to create issues or submit pull requests if you have suggestions or enhancements.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
