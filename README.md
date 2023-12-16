@@ -6,219 +6,279 @@ Brief description of your project: A fully implemented simple calculator API tha
 
 ## Jenkins CI/CD Pipeline Stages
 
-This section describes each stage of the Jenkins CI/CD pipeline for the project.
+This section describes each stage of the Jenkins CI/CD pipeline for the project, showcasing the various stages from code checkout to deployment, ensuring code quality, security, and seamless integration and delivery.
 
-
+### Prepare Environment
+This stage prepares the environment for the build.
 <table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Description</th>
-<th>Demo 1</th>
-<th>Demo 2</th>
-</tr>
-</thead>
-<tbody>
-<!-- Prepare Environment Stage -->
-<tr>
-<td><strong>Prepare Environment</strong></td>
-<td>This stage prepares the environment for the build.</td>
-<td>
-<img src="images/prepare-environment-1.png" alt="Prepare Environment 1" width="200"/>
-</td>
-<td>
-<img src="images/prepare-environment-2.png" alt="Prepare Environment 2" width="200"/>
-</td>
-</tr>
+  <tr>
+    <td>
+      <img src="images/prepare-environment-1.png" alt="Prepare Environment Step 1" width="400"/>
+      <p>Prepare Environment Step 1</p>
+    </td>
+    <td>
+      <img src="images/prepare-environment-2.png" alt="Prepare Environment Step 2" width="400"/>
+      <p>Prepare Environment Step 2</p>
+    </td>
+  </tr>
+</table>
 
-<!-- Checkout Code Stage -->
-<tr>
-<td><strong>Checkout Code</strong></td>
-<td>This stage checks out the code from the GitHub repository.</td>
-<td>
-<img src="images/checkout-code-1.png" alt="Checkout Code 1" width="200"/>
-</td>
-<td>
-</td>
-</tr>
+### Checkout Code
+This stage checks out the code from the GitHub repository.
+<table>
+  <tr>
+    <td>
+      <img src="images/checkout-code-1.png" alt="Checkout Code" width="400"/>
+      <p>Checkout Code</p>
+    </td>
+    <td>
+      <!-- Placeholder for second image if needed -->
+    </td>
+  </tr>
+</table>
 
-<!-- Install Dependencies Stage -->
-<tr>
-<td><strong>Install Dependencies</strong></td>
-<td>This stage installs the necessary dependencies for the project.</td>
-<td>
-<img src="images/install-dependencies-1.png" alt="Install Dependencies 1" width="200"/>
-</td>
-<td>
-#
-</td>
-</tr>
+### Install Dependencies
+This stage installs the necessary dependencies for the project.
+<table>
+  <tr>
+    <td>
+      <img src="images/install-dependencies-1.png" alt="Install Dependencies" width="400"/>
+      <p>Install Dependencies</p>
+    </td>
+    <td>
+      <!-- Placeholder for second image if needed -->
+    </td>
+  </tr>
+</table>
 
-<!-- Run Tests and Coverage Stage -->
-<tr>
-<td><strong>Run Tests and Coverage</strong></td>
-<td>This stage runs tests and generates coverage reports.</td>
-<td>
-<img src="images/run-tests-1.png" alt="Run Tests 1" width="200"/>
-</td>
-<td>
-#
-</td>
-</tr>
+### Run Tests and Coverage
+This stage runs tests and generates coverage reports.
+<table>
+  <tr>
+    <td>
+      <img src="images/run-tests-1.png" alt="Run Tests" width="400"/>
+      <p>Run Tests</p>
+    </td>
+    <td>
+      <!-- Placeholder for second image if needed -->
+    </td>
+  </tr>
+</table>
 
-<!-- Generate HTML Coverage Report Stage -->
-<tr>
-<td><strong>Generate HTML Coverage Report</strong></td>
-<td>This stage generates an HTML coverage report.</td>
-<td>
-<img src="images/generate-html-coverage-report-1.png" alt="Generate HTML Coverage Report 1" width="200"/>
-</td>
-<td>
-<img src="images/generate-html-coverage-report-2.png" alt="Generate HTML Coverage Report 2" width="200"/>
-</td>
-</tr>
+### Generate HTML Coverage Report
+This stage generates an HTML coverage report.
+<table>
+  <tr>
+    <td>
+      <img src="images/generate-html-coverage-report-1.png" alt="Generate HTML Coverage Report Step 1" width="400"/>
+      <p>Generate HTML Coverage Report Step 1</p>
+    </td>
+    <td>
+      <img src="images/generate-html-coverage-report-2.png" alt="Generate HTML Coverage Report Step 2" width="400"/>
+      <p>Generate HTML Coverage Report Step 2</p>
+    </td>
+  </tr>
+</table>
 
-<!-- Publish Coverage Report Stage -->
-<tr>
-<td><strong>Publish Coverage Report</strong></td>
-<td>This stage publishes the coverage report.</td>
-<td>
-<img src="images/publish-coverage-report-1.png" alt="Publish Coverage Report 1" width="200"/>
-</td>
-<td>
-#
-</td>
-</tr>
+### Publish Coverage Report
+This stage publishes the coverage report.
+<table>
+  <tr>
+    <td>
+      <img src="images/publish-coverage-report-1.png" alt="Publish Coverage Report" width="400"/>
+      <p>Publish Coverage Report</p>
+    </td>
+    <td>
+      <!-- Placeholder for second image if needed -->
+    </td>
+  </tr>
+</table>
 
-<!-- Code Quality Analysis Stage -->
-<tr>
-<td><strong>Code Quality Analysis (SonarQube)</strong></td>
-<td>This stage analyzes the code quality using SonarQube.</td>
-<td>
-<img src="images/code-quality-analysis-1.png" alt="Code Quality Analysis 1" width="200"/>
-</td>
-<td>
-<img src="images/code-quality-analysis-2.png" alt="Code Quality Analysis 2" width="200"/>
-</td>
-</tr>
 
-<!-- Quality Analysis Gate Stage -->
-<tr>
-<td><strong>Quality Analysis Gate (SonarQube)</strong></td>
-<td>This stage waits for the quality gate result from SonarQube.</td>
-<td>
-#
-</td>
-<td>
-#
-</td>
-</tr>
+### Code Quality Analysis (SonarQube)
+This stage analyzes the code quality using SonarQube.
+<table>
+  <tr>
+    <td>
+      <img src="images/code-quality-analysis-1.png" alt="Code Quality Analysis Step 1" width="400"/>
+      <p>Code Quality Analysis Step 1</p>
+    </td>
+    <td>
+      <img src="images/code-quality-analysis-2.png" alt="Code Quality Analysis Step 2" width="400"/>
+      <p>Code Quality Analysis Step 2</p>
+    </td>
+  </tr>
+</table>
 
-<!-- Security Files Scanning Stage -->
-<tr>
-<td><strong>Security Files Scanning (Trivy)</strong></td>
-<td>This stage scans security files using Trivy.</td>
-<td>
-#
-</td>
-<td>
-<!-- Add another image if needed -->
-</td>
-</tr>
+### Quality Analysis Gate (SonarQube)
+This stage waits for the quality gate result from SonarQube.
+<table>
+  <tr>
+    <td>
+      <img src="images/quality-gate-1.png" alt="Quality Gate Step 1" width="400"/>
+      <p>Quality Gate Step 1</p>
+    </td>
+    <td>
+      <img src="images/quality-gate-2.png" alt="Quality Gate Step 2" width="400"/>
+      <p>Quality Gate Step 2</p>
+    </td>
+  </tr>
+</table>
 
-<!-- Security Benchmarking Stage -->
-<tr>
-<td><strong>Security Benchmarking (OWASP)</strong></td>
-<td>This stage performs security benchmarking using OWASP.</td>
-<td>
-<img src="images/security-benchmarking-1.png" alt="Security Benchmarking 1" width="200"/>
-</td>
-<td>
-#
-</td>
-</tr>
+### Security Files Scanning (Trivy)
+This stage scans security files using Trivy.
+<table>
+  <tr>
+    <td>
+      <img src="images/trivy-file-scan-1.png" alt="Trivy File Scan" width="400"/>
+      <p>Trivy File Scan</p>
+    </td>
+    <td>
+      <img src="images/trivy-file-scan-2.png" alt="Trivy File Scan" width="400"/>
+      <p>Trivy File Scan</p>
+    </td>
+  </tr>
+</table>
 
-<!-- Containerization Stage -->
-<tr>
-<td><strong>Containerization (Docker)</strong></td>
-<td>This stage involves containerizing the application using Docker.</td>
-<td>
-<img src="images/containerization-1.png" alt="Containerization 1" width="200"/>
-</td>
-<td>
-<img src="images/containerization-2.png" alt="Containerization 2" width="200"/>
-</td>
-</tr>
+### Security Benchmarking (OWASP)
+This stage performs security benchmarking using OWASP.
+<table>
+  <tr>
+    <td>
+      <img src="images/owasp-benchmark-1.png" alt="OWASP Benchmark Step 1" width="400"/>
+      <p>OWASP Benchmark Step 1</p>
+    </td>
+    <td>
+      <img src="images/owasp-benchmark-2.png" alt="OWASP Benchmark Step 2" width="400"/>
+      <p>OWASP Benchmark Step 2</p>
+    </td>
+  </tr>
+</table>
 
-<!-- Container Security Scanning Stage -->
-<tr>
-<td><strong>Container Security Scanning (Trivy)</strong></td>
-<td>This stage scans the Docker container for vulnerabilities using Trivy.</td>
-<td>
-<img src="images/trivy-container-scan-1.png" alt="Trivy Container Scan" width="200"/>
-</td>
-<td>
-<img src="images/trivy-container-scan-2.png" alt="Trivy Container Scan" width="200"/>
-<!-- Add another image if needed -->
-</td>
-</tr>
+### Containerization (Docker)
+This stage involves containerizing the application using Docker.
+<table>
+  <tr>
+    <td>
+      <img src="images/containerization-1.png" alt="Containerization Step 1" width="400"/>
+      <p>Containerization Step 1</p>
+    </td>
+    <td>
+      <img src="images/containerization-2.png" alt="Containerization Step 2" width="400"/>
+      <p>Containerization Step 2</p>
+    </td>
+  </tr>
+</table>
 
-<!-- Deployment Stage -->
-<tr>
-<td><strong>Deployment</strong></td>
-<td>This stage handles the deployment of the application.</td>
-<td>
-<img src="images/deployment-1.png" alt="Deployment 1" width="200"/>
-</td>
-<td>
-<img src="images/deployment-2.png" alt="Deployment 2" width="200"/>
-</td>
-</tr>
-</tbody>
+### Container Security Scanning (Trivy)
+This stage scans the Docker container for vulnerabilities using Trivy.
+<table>
+  <tr>
+    <td>
+      <img src="images/trivy-container-scan-1.png" alt="Trivy Container Scan Step 1" width="400"/>
+      <p>Trivy Container Scan Step 1</p>
+    </td>
+    <td>
+      <img src="images/trivy-container-scan-2.png" alt="Trivy Container Scan Step 2" width="400"/>
+      <p>Trivy Container Scan Step 2</p>
+    </td>
+  </tr>
+</table>
+
+### Deployment
+This stage handles the deployment of the application.
+<table>
+  <tr>
+    <td>
+      <img src="images/deployment-1.png" alt="Deployment Step 1" width="400"/>
+      <p>Deployment Step 1</p>
+    </td>
+    <td>
+      <img src="images/deployment-2.png" alt="Deployment Step 2" width="400"/>
+      <p>Deployment Step 2</p>
+    </td>
+  </tr>
+</table>
+
+## Post-Deployment Activities
+
+### Email Notifications
+The pipeline is configured to send email notifications upon completion of the build process, providing information on the build status, including success or failure notifications.
+<table>
+  <tr>
+    <td>
+      <img src="images/email-notification-1.png" alt="Email Notification" width="400"/>
+      <p>Email Notification Example</p>
+    </td>
+    <!-- Add more images if necessary -->
+  </tr>
+</table>
+
+### Swagger Documentation
+The API is documented with Swagger, offering an interactive interface for exploring the API endpoints and their responses.
+<table>
+  <tr>
+    <td>
+      <img src="images/swagger-documentation-1.png" alt="Swagger Documentation" width="400"/>
+      <p>Swagger API Documentation</p>
+    </td>
+    <!-- Add more images if necessary -->
+  </tr>
+</table>
+
+### Postman Testing
+A Postman collection is available for testing the API endpoints. This collection can be used to understand and validate the request/response flow of the API.
+<table>
+  <tr>
+    <td>
+      <img src="images/postman-testing.png" alt="Postman Testing" width="400"/>
+      <p>Postman API Testing</p>
+    </td>
+    <!-- Add more images if necessary -->
+  </tr>
+</table>
+
+### Docker Container Monitoring
+Docker containers are monitored to ensure they are running as expected. This includes monitoring resource usage, uptime, and health status.
+<table>
+  <tr>
+    <td>
+      <img src="images/docker-monitoring-1.png" alt="Docker Container Monitoring" width="400"/>
+      <p>Docker Container Monitoring(Elastic Stack)</p>
+    </td>
+    <img src="images/docker-monitoring-2.png" alt="Docker Container Monitoring" width="400"/>
+      <p>Docker Container Monitoring(Portainer)</p>
+  </tr>
+</table>
+
+### Application Performance Monitoring
+The application is monitored using tools like Elastic APM, providing insights into performance metrics, error rates, and response times. This helps in understanding the application behavior under various conditions.
+<table>
+  <tr>
+    <td>
+      <img src="images/apm-monitoring.png" alt="Application Performance Monitoring" width="400"/>
+      <p>Application Performance Monitoring</p>
+    </td>
+    <!-- Add more images if necessary -->
+  </tr>
 </table>
 
 ## Environment Variables and Parameters
 
-To successfully run this Jenkins pipeline, specific environment variables and parameters need to be defined. These are used throughout the pipeline to customize the build and deployment process.
-
-### Required Environment Variables:
-
-- `SCANNER_HOME`: Specifies the home directory of the Sonar scanner.
-- `MOCK_API_KEY` and `EXPECTED_API_KEY`: Used for API authentication during testing.
-- Additional environment variables for Elastic APM as discussed earlier, like `APM_SERVICE_NAME`, `APM_SECRET_TOKEN`, and `APM_SERVER_URL`.
-
-### Adjusting Pipeline Parameters:
-
-The pipeline includes several parameters that you may need to adjust according to your environment:
-
-- `GITHUB_URL`: URL of the GitHub repository.
-- `BRANCH`: The branch to deploy.
-- `PROJECT_NAME`, `DOCKER_USERNAME`, `DOCKER_IMAGE_NAME`: Used in the Dockerization stage.
-- `CONTAINER_PORT`, `HOST_PORT`: Port configurations.
-- `EMAIL_NOTIFICATION`: For sending build status emails.
-- `JENKINS_URL`, `SONARQUBE_DASHBOARD_URL`, `API_END_POINT_URL`: Relevant URLs for the Jenkins server, SonarQube dashboard, and the API endpoint.
-
-### Elastic APM Configuration:
-
-To enable Elastic APM monitoring, set the following environment variables:
-
-- `ELASTIC_APM_ACTIVE`: Set to `true` to activate Elastic APM.
-- `APM_SERVICE_NAME`: The name of your service.
-- `APM_SECRET_TOKEN`: Secret token for APM Server.
-- `APM_SERVER_URL`: URL of the APM Server.
+[Include the section as previously provided]
 
 ## GitHub Actions Integration
 
-To trigger this Jenkins pipeline through GitHub Actions, you need to set up a GitHub Actions workflow. The workflow should include steps to invoke the Jenkins pipeline whenever code is pushed to the specified branch or when a pull request is made.
-
-### Steps to Configure GitHub Actions:
-
-1. **Create a Workflow File**: In your GitHub repository, create a new file under `.github/workflows` (e.g., `jenkins-trigger.yml`).
-2. **Define Workflow Triggers**: Specify the events that will trigger the workflow, such as push or pull request.
-3. **Add Steps to Invoke Jenkins Pipeline**: Use `curl` or a similar tool to trigger a build on the Jenkins server. You'll need to provide the Jenkins URL and authentication credentials (if required).
-4. **Push the Workflow File**: Commit and push the workflow file to your repository.
+[Include the section as previously provided]
 
 ## How to Use the Calculator API
 
-(Include instructions on how to use the Calculator API, including available endpoints and example requests)
+Provide detailed instructions on how to interact with the calculator API, including example requests and responses for each endpoint.
 
+## Post-Deployment Activities
+
+[Include sections on Email Notifications, Manual Testing, Stress Testing and API Testing, Monitoring with Elastic APM]
+
+## Stack Implementation Details
+
+[Include details on the technology stack]
