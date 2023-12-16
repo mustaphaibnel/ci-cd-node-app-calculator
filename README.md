@@ -6,60 +6,8 @@ Brief description of your project: A fully implemented simple calculator API tha
 
 ## Jenkins CI/CD Pipeline Stages
 
-(Include the table from the previous template here)
-
-## Environment Variables and Parameters
-
-To successfully run this Jenkins pipeline, specific environment variables and parameters need to be defined. These are used throughout the pipeline to customize the build and deployment process.
-
-### Required Environment Variables:
-
-- `SCANNER_HOME`: Specifies the home directory of the Sonar scanner.
-- `MOCK_API_KEY` and `EXPECTED_API_KEY`: Used for API authentication during testing.
-- Additional environment variables for Elastic APM as discussed earlier, like `APM_SERVICE_NAME`, `APM_SECRET_TOKEN`, and `APM_SERVER_URL`.
-
-### Adjusting Pipeline Parameters:
-
-The pipeline includes several parameters that you may need to adjust according to your environment:
-
-- `GITHUB_URL`: URL of the GitHub repository.
-- `BRANCH`: The branch to deploy.
-- `PROJECT_NAME`, `DOCKER_USERNAME`, `DOCKER_IMAGE_NAME`: Used in the Dockerization stage.
-- `CONTAINER_PORT`, `HOST_PORT`: Port configurations.
-- `EMAIL_NOTIFICATION`: For sending build status emails.
-- `JENKINS_URL`, `SONARQUBE_DASHBOARD_URL`, `API_END_POINT_URL`: Relevant URLs for the Jenkins server, SonarQube dashboard, and the API endpoint.
-
-### Elastic APM Configuration:
-
-To enable Elastic APM monitoring, set the following environment variables:
-
-- `ELASTIC_APM_ACTIVE`: Set to `true` to activate Elastic APM.
-- `APM_SERVICE_NAME`: The name of your service.
-- `APM_SECRET_TOKEN`: Secret token for APM Server.
-- `APM_SERVER_URL`: URL of the APM Server.
-
-## GitHub Actions Integration
-
-To trigger this Jenkins pipeline through GitHub Actions, you need to set up a GitHub Actions workflow. The workflow should include steps to invoke the Jenkins pipeline whenever code is pushed to the specified branch or when a pull request is made.
-
-### Steps to Configure GitHub Actions:
-
-1. **Create a Workflow File**: In your GitHub repository, create a new file under `.github/workflows` (e.g., `jenkins-trigger.yml`).
-
-2. **Define Workflow Triggers**: Specify the events that will trigger the workflow, such as push or pull request.
-
-3. **Add Steps to Invoke Jenkins Pipeline**: Use `curl` or a similar tool to trigger a build on the Jenkins server. You'll need to provide the Jenkins URL and authentication credentials (if required).
-
-4. **Push the Workflow File**: Commit and push the workflow file to your repository.
-
-## How to Use the Calculator API
-
-(Include instructions on how to use the Calculator API, including available endpoints and example requests)
-
-
-## Jenkins CI/CD Pipeline Stages
-
 This section describes each stage of the Jenkins CI/CD pipeline for the project.
+
 
 <table>
 <thead>
@@ -202,7 +150,48 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 </tbody>
 </table>
 
-## Additional Information
+## Environment Variables and Parameters
 
-(Include any additional information, links, or resources related to your project here)
+To successfully run this Jenkins pipeline, specific environment variables and parameters need to be defined. These are used throughout the pipeline to customize the build and deployment process.
+
+### Required Environment Variables:
+
+- `SCANNER_HOME`: Specifies the home directory of the Sonar scanner.
+- `MOCK_API_KEY` and `EXPECTED_API_KEY`: Used for API authentication during testing.
+- Additional environment variables for Elastic APM as discussed earlier, like `APM_SERVICE_NAME`, `APM_SECRET_TOKEN`, and `APM_SERVER_URL`.
+
+### Adjusting Pipeline Parameters:
+
+The pipeline includes several parameters that you may need to adjust according to your environment:
+
+- `GITHUB_URL`: URL of the GitHub repository.
+- `BRANCH`: The branch to deploy.
+- `PROJECT_NAME`, `DOCKER_USERNAME`, `DOCKER_IMAGE_NAME`: Used in the Dockerization stage.
+- `CONTAINER_PORT`, `HOST_PORT`: Port configurations.
+- `EMAIL_NOTIFICATION`: For sending build status emails.
+- `JENKINS_URL`, `SONARQUBE_DASHBOARD_URL`, `API_END_POINT_URL`: Relevant URLs for the Jenkins server, SonarQube dashboard, and the API endpoint.
+
+### Elastic APM Configuration:
+
+To enable Elastic APM monitoring, set the following environment variables:
+
+- `ELASTIC_APM_ACTIVE`: Set to `true` to activate Elastic APM.
+- `APM_SERVICE_NAME`: The name of your service.
+- `APM_SECRET_TOKEN`: Secret token for APM Server.
+- `APM_SERVER_URL`: URL of the APM Server.
+
+## GitHub Actions Integration
+
+To trigger this Jenkins pipeline through GitHub Actions, you need to set up a GitHub Actions workflow. The workflow should include steps to invoke the Jenkins pipeline whenever code is pushed to the specified branch or when a pull request is made.
+
+### Steps to Configure GitHub Actions:
+
+1. **Create a Workflow File**: In your GitHub repository, create a new file under `.github/workflows` (e.g., `jenkins-trigger.yml`).
+2. **Define Workflow Triggers**: Specify the events that will trigger the workflow, such as push or pull request.
+3. **Add Steps to Invoke Jenkins Pipeline**: Use `curl` or a similar tool to trigger a build on the Jenkins server. You'll need to provide the Jenkins URL and authentication credentials (if required).
+4. **Push the Workflow File**: Commit and push the workflow file to your repository.
+
+## How to Use the Calculator API
+
+(Include instructions on how to use the Calculator API, including available endpoints and example requests)
 
