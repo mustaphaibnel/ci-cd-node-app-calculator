@@ -34,7 +34,6 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage checks out the code from the GitHub repository.</td>
 <td>
 <img src="images/checkout-code-1.png" alt="Checkout Code 1" width="200"/>
-<img src="images/checkout-code-2.png" alt="Checkout Code 2" width="200"/>
 </td>
 </tr>
 
@@ -133,7 +132,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td><strong>Container Security Scanning (Trivy)</strong></td>
 <td>This stage scans the Docker container for vulnerabilities using Trivy.</td>
 <td>
-<img src="images/trivy-container-scan.png" alt="Trivy Container Scan" width="200"/>
+<img src="images/trivy-container-scan-1.png" alt="Trivy Container Scan" width="200"/>
+<img src="images/trivy-container-scan-2.png" alt="Trivy Container Scan" width="200"/>
 <!-- Add another image if needed -->
 </td>
 </tr>
