@@ -25,7 +25,7 @@ pipeline {
         MOCK_API_KEY = 'mock_api_key_value'
         EXPECTED_API_KEY = credentials('api-key-calculator-prod')
         ELASTIC_APM_ACTIVE= true
-        APM_SERVICE_NAME= params.DOCKER_IMAGE_NAME
+        APM_SERVICE_NAME= ${params.DOCKER_IMAGE_NAME}
         APM_SECRET_TOKEN= ""
         APM_SERVER_URL= "https://apm.guidestudio.info"
     }
@@ -80,12 +80,11 @@ pipeline {
                     if (fileExists(coverageReportDir)) {
                         // Set EXPECTED_API_KEY to MOCK_API_KEY temporarily
                         env.EXPECTED_API_KEY = env.MOCK_API_KEY
-
                         sh "npm run generate-html-report"
                         sh "cp -r ${coverageReportDir}/* ${env.WORKSPACE}/reports/coverage/"
 
                         // Reset EXPECTED_API_KEY to the original value
-                        env.EXPECTED_API_KEY = credentials('YourCredentialId')
+                        env.EXPECTED_API_KEY = credentials('api-key-calculator-prod')
                     } else {
                         error "Coverage report directory does not exist."
                     }
