@@ -14,7 +14,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <tr>
 <th>Stage</th>
 <th>Description</th>
-<th>Screenshots</th>
+<th>Demo 1</th>
+<th>Demo 2</th>
 </tr>
 </thead>
 <tbody>
@@ -24,6 +25,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage prepares the environment for the build.</td>
 <td>
 <img src="images/prepare-environment-1.png" alt="Prepare Environment 1" width="200"/>
+</td>
+<td>
 <img src="images/prepare-environment-2.png" alt="Prepare Environment 2" width="200"/>
 </td>
 </tr>
@@ -35,6 +38,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>
 <img src="images/checkout-code-1.png" alt="Checkout Code 1" width="200"/>
 </td>
+<td>
+</td>
 </tr>
 
 <!-- Install Dependencies Stage -->
@@ -43,6 +48,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage installs the necessary dependencies for the project.</td>
 <td>
 <img src="images/install-dependencies-1.png" alt="Install Dependencies 1" width="200"/>
+</td>
+<td>
 <img src="images/install-dependencies-2.png" alt="Install Dependencies 2" width="200"/>
 </td>
 </tr>
@@ -53,6 +60,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage runs tests and generates coverage reports.</td>
 <td>
 <img src="images/run-tests-1.png" alt="Run Tests 1" width="200"/>
+</td>
+<td>
 <img src="images/run-tests-2.png" alt="Run Tests 2" width="200"/>
 </td>
 </tr>
@@ -63,6 +72,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage generates an HTML coverage report.</td>
 <td>
 <img src="images/generate-html-coverage-report-1.png" alt="Generate HTML Coverage Report 1" width="200"/>
+</td>
+<td>
 <img src="images/generate-html-coverage-report-2.png" alt="Generate HTML Coverage Report 2" width="200"/>
 </td>
 </tr>
@@ -73,6 +84,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage publishes the coverage report.</td>
 <td>
 <img src="images/publish-coverage-report-1.png" alt="Publish Coverage Report 1" width="200"/>
+</td>
+<td>
 <img src="images/publish-coverage-report-2.png" alt="Publish Coverage Report 2" width="200"/>
 </td>
 </tr>
@@ -83,6 +96,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage analyzes the code quality using SonarQube.</td>
 <td>
 <img src="images/code-quality-analysis-1.png" alt="Code Quality Analysis 1" width="200"/>
+</td>
+<td>
 <img src="images/code-quality-analysis-2.png" alt="Code Quality Analysis 2" width="200"/>
 </td>
 </tr>
@@ -93,6 +108,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage waits for the quality gate result from SonarQube.</td>
 <td>
 <img src="images/quality-analysis-gate-1.png" alt="Quality Analysis Gate 1" width="200"/>
+</td>
+<td>
 <img src="images/quality-analysis-gate-2.png" alt="Quality Analysis Gate 2" width="200"/>
 </td>
 </tr>
@@ -103,6 +120,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage scans security files using Trivy.</td>
 <td>
 <img src="images/trivy-file-scan.png" alt="Trivy File Scan" width="200"/>
+</td>
+<td>
 <!-- Add another image if needed -->
 </td>
 </tr>
@@ -113,6 +132,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage performs security benchmarking using OWASP.</td>
 <td>
 <img src="images/security-benchmarking-1.png" alt="Security Benchmarking 1" width="200"/>
+</td>
+<td>
 <img src="images/security-benchmarking-2.png" alt="Security Benchmarking 2" width="200"/>
 </td>
 </tr>
@@ -123,6 +144,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage involves containerizing the application using Docker.</td>
 <td>
 <img src="images/containerization-1.png" alt="Containerization 1" width="200"/>
+</td>
+<td>
 <img src="images/containerization-2.png" alt="Containerization 2" width="200"/>
 </td>
 </tr>
@@ -133,6 +156,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage scans the Docker container for vulnerabilities using Trivy.</td>
 <td>
 <img src="images/trivy-container-scan-1.png" alt="Trivy Container Scan" width="200"/>
+</td>
+<td>
 <img src="images/trivy-container-scan-2.png" alt="Trivy Container Scan" width="200"/>
 <!-- Add another image if needed -->
 </td>
@@ -144,6 +169,8 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td>This stage handles the deployment of the application.</td>
 <td>
 <img src="images/deployment-1.png" alt="Deployment 1" width="200"/>
+</td>
+<td>
 <img src="images/deployment-2.png" alt="Deployment 2" width="200"/>
 </td>
 </tr>
