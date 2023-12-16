@@ -50,7 +50,7 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <img src="images/install-dependencies-1.png" alt="Install Dependencies 1" width="200"/>
 </td>
 <td>
-<img src="images/install-dependencies-2.png" alt="Install Dependencies 2" width="200"/>
+#
 </td>
 </tr>
 
@@ -62,7 +62,7 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <img src="images/run-tests-1.png" alt="Run Tests 1" width="200"/>
 </td>
 <td>
-<img src="images/run-tests-2.png" alt="Run Tests 2" width="200"/>
+#
 </td>
 </tr>
 
@@ -86,7 +86,7 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <img src="images/publish-coverage-report-1.png" alt="Publish Coverage Report 1" width="200"/>
 </td>
 <td>
-<img src="images/publish-coverage-report-2.png" alt="Publish Coverage Report 2" width="200"/>
+#
 </td>
 </tr>
 
@@ -107,10 +107,10 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td><strong>Quality Analysis Gate (SonarQube)</strong></td>
 <td>This stage waits for the quality gate result from SonarQube.</td>
 <td>
-<img src="images/quality-analysis-gate-1.png" alt="Quality Analysis Gate 1" width="200"/>
+#
 </td>
 <td>
-<img src="images/quality-analysis-gate-2.png" alt="Quality Analysis Gate 2" width="200"/>
+#
 </td>
 </tr>
 
@@ -119,7 +119,7 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <td><strong>Security Files Scanning (Trivy)</strong></td>
 <td>This stage scans security files using Trivy.</td>
 <td>
-<img src="images/trivy-file-scan.png" alt="Trivy File Scan" width="200"/>
+#
 </td>
 <td>
 <!-- Add another image if needed -->
@@ -134,7 +134,7 @@ This section describes each stage of the Jenkins CI/CD pipeline for the project.
 <img src="images/security-benchmarking-1.png" alt="Security Benchmarking 1" width="200"/>
 </td>
 <td>
-<img src="images/security-benchmarking-2.png" alt="Security Benchmarking 2" width="200"/>
+#
 </td>
 </tr>
 
