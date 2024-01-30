@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "echo 'No build step required'",
     "test": "jest",
     "coverage": "jest --coverage",
     "test:coverage": "jest --coverage",
