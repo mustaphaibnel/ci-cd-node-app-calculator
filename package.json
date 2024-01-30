@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "test": "jest",
+    "coverage": "jest --coverage",
     "test:coverage": "jest --coverage",
     "generate-html-report": "npx jest --coverage --coverageReporters=html"
   },
