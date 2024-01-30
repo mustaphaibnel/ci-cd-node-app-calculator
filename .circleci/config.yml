@@ -1,0 +1,50 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7.0
+  docker: circleci/docker@2.1.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/node:14.17
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
+      - run: npm install
+      - save_cache:
+          key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run: npm run build
+      - run: npm test
+      - run: npm run coverage
+
+  build-and-push-docker:
+    docker:
+      - image: cimg/node:14.17
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: docker build -t mustaphaibnel/ci-cd-node-app-calculator:latest .
+      - run:
+          name: Login to Docker Hub
+          command: echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+      - run:
+          name: Push Docker image
+          command: docker push mustaphaibnel/ci-cd-node-app-calculator:latest
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build-and-test
+      - build-and-push-docker:
+          requires:
+            - build-and-test
