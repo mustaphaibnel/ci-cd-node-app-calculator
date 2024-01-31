@@ -1,3 +1,4 @@
+
 Welcome to the repository of our CI/CD Node.js Calculator Application, a model of modern software engineering practices with a robust calculator API. This project is a showcase of best practices in continuous integration and continuous deployment (CI/CD) tailored for Node.js applications.
 
 ## Project Highlights
@@ -9,7 +10,7 @@ Welcome to the repository of our CI/CD Node.js Calculator Application, a model o
 - **Comprehensive Monitoring**: Utilizes the ELK stack for thorough monitoring of the application stack and performance, ensuring high availability and real-time insights.
 - **Extensive Documentation**: Includes detailed Swagger documentation for a clear understanding of API functionalities.
 - **Containerization with Docker**: Demonstrates practical use of Docker for simplified deployment and scalability.
-
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/GNxz3yhe9SRj6JsU5J3TaY/EyCN8DBRCErfUhyzgEJEeM/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/GNxz3yhe9SRj6JsU5J3TaY/EyCN8DBRCErfUhyzgEJEeM/tree/main)
 ## Getting Started
 
 Clone the repository to get started and follow our [setup guide](#setup-guide) for detailed instructions on installation, environment setup, and running the application.
