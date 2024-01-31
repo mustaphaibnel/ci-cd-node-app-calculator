@@ -66,7 +66,7 @@ jobs:
           command: docker build -t ${MY_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG} .
       - run:
           name: Login to Docker Hub
-          command: echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+          command: echo $DOCKERHUB_ACCESS_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
       - run:
           name: Push Docker image
           command: docker push ${MY_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
