@@ -24,6 +24,17 @@ jobs:
       - run: npm test
       - run: npm run coverage
       - run:
+        name: Install SonarQube Scanner
+        command: |
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-x.y.z-linux.zip
+          unzip sonar-scanner-cli-x.y.z-linux.zip
+          sudo mv sonar-scanner-x.y.z-linux /opt/sonar-scanner
+          echo 'export PATH="$PATH:/opt/sonar-scanner/bin"' >> $BASH_ENV
+          source $BASH_ENV
+
+      - run:
           name: SonarQube Analysis
           command: |
             sonar-scanner \
@@ -38,7 +49,7 @@ jobs:
             aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             aws configure set default.region $AWS_REGION
-            aws s3 cp ./coverage s3://${CIRCLE_PROJECT_USERNAME}_cloud/${CIRCLE_PROJECT_REPONAME}/ --recursive
+            aws s3 cp ./coverage s3://${CIRCLE_PROJECT_USERNAME}-cloud/${CIRCLE_PROJECT_REPONAME}/ --recursive
       # Store artifacts in GitHub
       - store_artifacts:
           path: ./coverage
