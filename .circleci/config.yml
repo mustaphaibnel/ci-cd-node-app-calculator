@@ -28,7 +28,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y unzip
-            wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-x.y.z-linux.zip
+            wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
             unzip sonar-scanner-cli-x.y.z-linux.zip
             sudo mv sonar-scanner-x.y.z-linux /opt/sonar-scanner
             echo 'export PATH="$PATH:/opt/sonar-scanner/bin"' >> $BASH_ENV
