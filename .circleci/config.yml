@@ -33,12 +33,12 @@ jobs:
             sudo mv sonar-scanner-4.6.2.2472-linux /opt/sonar-scanner
             echo 'export PATH="$PATH:/opt/sonar-scanner/bin"' >> $BASH_ENV
             source $BASH_ENV
-
       - run:
           name: SonarQube Analysis
           command: |
             sonar-scanner \
               -Dsonar.projectKey=${MY_PROJECT_USERNAME}${CIRCLE_PROJECT_REPONAME} \
+              -Dsonar.sources=src \
               -Dsonar.host.url=$SONARQUBE_HOST \
               -Dsonar.login=$SONAR_TOKEN
       # Store reports in Amazon S3
