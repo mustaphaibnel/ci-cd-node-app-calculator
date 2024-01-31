@@ -38,7 +38,7 @@ jobs:
           name: SonarQube Analysis
           command: |
             sonar-scanner \
-              -Dsonar.projectKey=${CIRCLE_PROJECT_USERNAME}${CIRCLE_PROJECT_REPONAME} \
+              -Dsonar.projectKey=${MY_PROJECT_USERNAME}${CIRCLE_PROJECT_REPONAME} \
               -Dsonar.host.url=$SONARQUBE_HOST \
               -Dsonar.login=$SONAR_TOKEN
       # Store reports in Amazon S3
@@ -49,7 +49,7 @@ jobs:
             aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             aws configure set default.region $AWS_REGION
-            aws s3 cp ./coverage s3://${CIRCLE_PROJECT_USERNAME}-cloud/${CIRCLE_PROJECT_REPONAME}/ --recursive
+            aws s3 cp ./coverage s3://${MY_PROJECT_USERNAME}-cloud/${CIRCLE_PROJECT_REPONAME}/ --recursive
       # Store artifacts in GitHub
       - store_artifacts:
           path: ./coverage
@@ -63,13 +63,13 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
-          command: docker build -t ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG} .
+          command: docker build -t ${MY_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG} .
       - run:
           name: Login to Docker Hub
           command: echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
       - run:
           name: Push Docker image
-          command: docker push ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
+          command: docker push ${MY_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
 
 workflows:
   version: 2
