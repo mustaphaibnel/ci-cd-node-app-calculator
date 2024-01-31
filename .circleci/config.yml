@@ -23,6 +23,26 @@ jobs:
       - run: npm run build
       - run: npm test
       - run: npm run coverage
+      - run:
+          name: SonarQube Analysis
+          command: |
+            sonar-scanner \
+              -Dsonar.projectKey=${CIRCLE_PROJECT_USERNAME}${CIRCLE_PROJECT_REPONAME} \
+              -Dsonar.host.url=$SONARQUBE_HOST \
+              -Dsonar.login=$SONAR_TOKEN
+      # Store reports in Amazon S3
+      - run:
+          name: Store Reports in S3
+          command: |
+            sudo apt-get install awscli
+            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            aws configure set default.region $AWS_REGION
+            aws s3 cp ./coverage s3://${CIRCLE_PROJECT_USERNAME}_cloud/${CIRCLE_PROJECT_REPONAME}/ --recursive
+      # Store artifacts in GitHub
+      - store_artifacts:
+          path: ./coverage
+          destination: ${CIRCLE_PROJECT_REPONAME}
 
   build-and-push-docker:
     docker:
@@ -32,13 +52,13 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
-          command: docker build -t mustaphaibnel/ci-cd-node-app-calculator:latest .
+          command: docker build -t ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG} .
       - run:
           name: Login to Docker Hub
           command: echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
       - run:
           name: Push Docker image
-          command: docker push mustaphaibnel/ci-cd-node-app-calculator:latest
+          command: docker push ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}
 
 workflows:
   version: 2
